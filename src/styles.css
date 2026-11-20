@@ -1,0 +1,13 @@
+/* Subtle's styles, one file per area under ./styles, imported in this order (the cascade depends on it). */
+@import './styles/tokens.css';
+@import './styles/base.css';
+@import './styles/topbar.css';
+@import './styles/player.css';
+@import './styles/panels.css';
+@import './styles/controls.css';
+@import './styles/menus.css';
+@import './styles/list.css';
+@import './styles/timeline.css';
+@import './styles/dialogs.css';
+@import './styles/toast.css';
+@import './styles/pages.css';

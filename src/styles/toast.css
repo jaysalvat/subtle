@@ -1,0 +1,88 @@
+/* Messages (Sonner). */
+
+/* ---------- Toast ---------- */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Messages (Sonner): neutral panel look; the tone only shows in the icon and a thin left edge. */
+[data-sonner-toaster] {
+  --width: 420px;
+  font-family: var(--font);
+}
+
+.app-toast {
+  font-size: var(--fs-m);
+  line-height: 1.4;
+}
+
+[data-sonner-toast][data-styled='true'].app-toast {
+  border-left: 3px solid var(--border-strong);
+}
+
+[data-sonner-toast][data-styled='true'][data-type='success'].app-toast {
+  border-left-color: var(--success);
+}
+
+[data-sonner-toast][data-styled='true'][data-type='warning'].app-toast {
+  border-left-color: var(--warn);
+}
+
+[data-sonner-toast][data-styled='true'][data-type='success'] [data-icon] {
+  color: var(--success);
+}
+
+[data-sonner-toast][data-styled='true'][data-type='warning'] [data-icon] {
+  color: var(--warn);
+}
+
+/* Undo: a text button in the accent colour, like the app's small buttons. */
+/* A list in a message (e.g. the files saved): one per line. */
+[data-sonner-toast] [data-description] {
+  white-space: pre-line;
+}
+
+[data-sonner-toast][data-styled='true'].app-toast [data-button] {
+  height: 26px;
+  padding: 0 10px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-s);
+  background: transparent;
+  color: var(--accent);
+  font-size: var(--fs-s);
+  font-weight: 600;
+}
+
+[data-sonner-toast][data-styled='true'].app-toast [data-button]:hover {
+  border-color: var(--accent-soft-border);
+  background: var(--accent-soft-bg);
+}
+
+/* Close: inside, top right (Sonner puts it astride the top-left corner). */
+[data-sonner-toast][data-styled='true'].app-toast {
+  padding-right: 34px;
+}
+
+[data-sonner-toast][data-styled='true'].app-toast [data-close-button] {
+  left: auto;
+  right: 8px;
+  top: 8px;
+  transform: none;
+  background: transparent;
+  border-color: transparent;
+  color: var(--text-muted);
+}
+
+[data-sonner-toast][data-styled='true'].app-toast [data-close-button]:hover {
+  background: var(--bg-panel);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+
+/* No word left alone on the last line. */
+[data-sonner-toast] [data-title],
+[data-sonner-toast] [data-description] {
+  text-wrap: pretty;
+}

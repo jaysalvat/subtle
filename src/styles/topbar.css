@@ -1,0 +1,87 @@
+/* Top bar (TopBar.tsx). */
+
+/* ---------- Top bar ---------- */
+.topbar {
+  height: var(--topbar-h);
+  flex: 0 0 var(--topbar-h);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 0 16px;
+  background: var(--bg-panel);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+  font-size: var(--fs-l);
+}
+
+.chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-muted);
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* One line each: a long name or status is cut with "…", never wrapped. */
+.chips > * {
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chips > .chip {
+  flex-shrink: 1;
+}
+
+.chips > :not(.chip) {
+  flex-shrink: 0;
+}
+
+.chip {
+  padding: 3px 8px;
+  background: var(--bg-raised);
+  border-radius: var(--radius-s);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 260px;
+}
+
+.chip.missing {
+  border: 1px dashed var(--accent-soft-border);
+  background: transparent;
+  color: var(--accent-soft-text);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.vsep {
+  width: 1px;
+  height: 24px;
+  background: var(--border);
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Bookmarks and Tools read as a menu bar, not a row of buttons: no outline until hovered or open. */
+.tools .menu-trigger {
+  border-color: transparent;
+}
+
+.tools .menu-trigger[aria-expanded='true'] {
+  background: var(--bg-raised);
+}

@@ -1,0 +1,150 @@
+/* Design tokens (colours, sizes, type): use these variables, never raw colours. See DESIGN.md. */
+
+/* Design tokens — see DESIGN.md */
+:root {
+  --bg-app: #1b1d21;
+  --bg-panel: #23262b;
+  --bg-sunken: #1f2125;
+  --bg-raised: #2c3036;
+  --bg-timeline: #202327;
+  --border: #353a41;
+  --border-soft: #2c3036;
+  --border-strong: #3e444c;
+  /* A count bubble (.pill): stands out from the button it sits on. */
+  --pill-bg: #535a63;
+  /* Outline of plain buttons: clearly visible, softer than the text. */
+  --btn-border: #6f7780;
+  /* Same weight for the yellow (soft accent) buttons. */
+  --btn-soft-border: #8a7438;
+
+  --text: #e6e8eb;
+  --text-strong: #ffffff;
+  --text-muted: #b8bfc7;
+  /* A subtitle with no colour of its own (the colour dot for "No colour"). */
+  --subtitle-white: #ffffff;
+  /* Iconoir's nav-arrow-down in --text-muted, for native selects (a background can't take a variable's colour). */
+  --select-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23b8bfc7' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  --text-dim: #9fa7b0;
+  --text-disabled: #6b727b;
+  --icon: #c3c9d0;
+
+  --accent: #f5c542;
+  --accent-hover: #ffd970;
+  --accent-ink: #1b1d21;
+  --accent-soft-bg: #33302a;
+  --accent-soft-border: #5a4e2e;
+  --accent-soft-text: #f5d98a;
+  --selected-row: #2e2b24;
+  /* Every other row of a list, barely lighter. */
+  /* A dark veil over pictures (filmstrip slots, overlays). */
+  --scrim: rgba(0, 0, 0, 0.3);
+  --hover: #353a41;
+  --row-hover: #272a2f;
+  --drop-over: #2a2820;
+  --tick: #33383f;
+  --tick-major: #4b525b;
+  /* Over the video picture (subtitle overlay, OCR boxes, badges): must read on any image. */
+  --video-bg: #000;
+  --on-picture: #fff;
+  --on-picture-dim: #d0d4d9;
+  --picture-shadow: #000;
+  --picture-ring: rgba(0, 0, 0, 0.75);
+  --picture-label-bg: rgba(0, 0, 0, 0.6);
+  --picture-pill-bg: rgba(20, 22, 26, 0.88);
+  --backdrop: rgba(10, 11, 13, 0.6);
+  --shadow-menu: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-dialog: 0 20px 50px rgba(0, 0, 0, 0.5);
+  /* Over the bottom of content that scrolls on (dialogs.css). */
+  --scroll-shadow: rgba(0, 0, 0, 0.25);
+  --shadow-panel: 0 14px 64px rgba(0, 0, 0, 0.75), 0 8px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 0, 0, 0.6);
+  --row-alt: rgba(255, 255, 255, 0.025);
+  --row-alt-selected: rgba(255, 255, 255, 0.04);
+
+  --warn: #f0a574;
+  --warn-bg: #3a2c22;
+  /* Things worth noticing because they cost a lot (e.g. 1.5 GB stored). */
+  --danger: #f07b74;
+  --hi: #8fb8f0;
+  /* Scene notes: two colours, alternating from one scene to the next. */
+  --scene-a: #b79cf0;
+  --scene-a-hi: #d2c0fa;
+  --scene-b: #7fc8b8;
+
+  --cue-fill: rgba(52, 65, 79, 0.6);
+  --cue-border: #4b5b6c;
+  --cue-text: #d5dee7;
+  --cue-hi-fill: rgba(43, 58, 82, 0.6);
+  --cue-hi-border: #4f6e99;
+  --cue-sel-fill: rgba(74, 67, 48, 0.85);
+  --cue-sel-text: #fff4d6;
+
+  --waveform: #4d5662;
+
+  --success: #8fb79a;
+  --success-bg: #223128;
+
+  --scrub-cue: #5b626a;
+  --scrub-cue-played: rgba(27, 29, 33, 0.1);
+
+  --radius-s: 4px;
+  --radius-m: 5px;
+  --radius-l: 8px;
+
+  /* Roboto (served by the app: @fontsource/roboto in main.tsx), else the system's own font. */
+  --font: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-xs: 12px;
+  --fs-s: 13px;
+  --fs-m: 14px;
+  --fs-l: 15px;
+
+  --topbar-h: 48px;
+  --timeline-h: 232px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  /* No two-finger swipe to the previous page (it would lose the open video). */
+  overscroll-behavior-x: none;
+}
+
+body {
+  background: var(--bg-app);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-m);
+  -webkit-font-smoothing: antialiased;
+  /* Below the app's smallest size (.app), the window scrolls instead of squeezing the layout. */
+  overflow: auto;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.tnum {
+  font-variant-numeric: tabular-nums;
+}

@@ -1,0 +1,606 @@
+/* Timeline: ruler, scene notes, bookmarks, filmstrip, waveform, progress band and badge, blocks, playhead (Timeline.tsx). */
+
+/* ---------- Timeline ---------- */
+.timeline {
+  /* Always room for the thumbnails strip: the timeline (and the picture above) don't jump when a
+     video comes in and its thumbnails appear. */
+  flex: 0 0 calc(var(--timeline-h) + 56px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-timeline);
+  border-top: 1px solid var(--border);
+}
+
+.timeline-head {
+  flex: 0 0 38px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.zoom {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--text-muted);
+}
+
+.tl-body {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  margin: 0 14px;
+  user-select: none;
+  touch-action: none;
+}
+
+.ruler {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 28px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: pointer;
+}
+
+/* Scene notes (SceneNotes.tsx): a bubble on the ruler, a band under it as far as the scene goes. */
+.tl-note {
+  position: absolute;
+  top: 3px;
+  z-index: 7;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 18px;
+  padding: 0;
+  transform: translateX(-2px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 9px 9px 9px 2px;
+  background: linear-gradient(180deg, var(--scene-a-hi), var(--scene-a));
+  color: var(--accent-ink);
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  cursor: grab;
+}
+
+.tl-note:hover,
+.tl-note.open {
+  filter: brightness(1.12);
+  box-shadow:
+    0 3px 8px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.tl-note.empty {
+  background: var(--bg-raised);
+  color: var(--text-muted);
+  border-style: dashed;
+  border-color: var(--border-strong);
+}
+
+.tl-scene {
+  position: absolute;
+  top: 24px;
+  height: 4px;
+  border-radius: 2px;
+  opacity: 0.75;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.tl-scene.a {
+  background: var(--scene-a);
+}
+
+.tl-scene.b {
+  background: var(--scene-b);
+}
+
+.note-pop {
+  position: fixed;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 480px;
+  max-width: calc(100vw - 16px);
+  padding: 14px 16px 16px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-l);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  font-size: var(--fs-s);
+}
+
+.note-pop-head,
+.note-pop-foot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.note-pop textarea {
+  min-height: 120px;
+  resize: vertical;
+  font-size: var(--fs-l);
+  line-height: 1.45;
+}
+
+.note-pop .note {
+  margin: 0;
+}
+
+.note-pop .link-btn {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.note-pop .link-btn:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* Bookmarks: numbered flag on the ruler, faint line across the tracks. */
+.tl-bookmark {
+  position: absolute;
+  top: 2px;
+  z-index: 6;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 3px;
+  transform: translateX(-1px);
+  border: 0;
+  border-radius: 0 3px 3px 0;
+  background: var(--hi);
+  color: var(--accent-ink);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.tl-bookmark-line {
+  position: absolute;
+  top: 18px;
+  bottom: 0;
+  width: 0;
+  border-left: 1px dashed var(--hi);
+  opacity: 0.55;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.tick {
+  position: absolute;
+  top: 0;
+  height: 28px;
+  border-left: 1px solid var(--tick);
+}
+
+.tick.major {
+  border-left-color: var(--tick-major);
+}
+
+.tick span {
+  position: absolute;
+  left: 5px;
+  top: 5px;
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.track.panning,
+.tl-pan.panning,
+.tl-strip:active {
+  cursor: grabbing;
+}
+
+/* ⇧-drag on an empty spot: the span being selected. */
+.tl-band {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: var(--accent-soft-bg);
+  border-left: 1px solid var(--accent-soft-border);
+  border-right: 1px solid var(--accent-soft-border);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Empty space under the subtitle blocks: drag to scroll, click to seek. */
+.tl-pan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 144px;
+  bottom: 0;
+  cursor: grab;
+}
+
+.timeline.has-strip .tl-pan {
+  top: 190px;
+}
+
+.track {
+  cursor: grab;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 44px;
+  height: 96px;
+  background: var(--bg-app);
+  border-radius: var(--radius-s);
+}
+
+.toggle-group {
+  display: inline-flex;
+}
+
+.toggle-group > .btn:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  margin-left: -1px;
+}
+
+.toggle-group > .btn:not(:last-child) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.icon-toggle {
+  padding: 0 6px;
+}
+
+.mini-strip {
+  position: relative;
+  flex: 0 0 16px;
+  margin-bottom: -8px;
+  cursor: pointer;
+}
+
+/* Scene notes' scenes along the strip's bottom edge (SceneNotes.tsx). */
+.strip-scene {
+  /* Just an indication: a 2 px line under the strip, a little apart from it. */
+  position: absolute;
+  top: calc(100% + 3px);
+  height: 2px;
+  border-radius: 1px;
+}
+
+.strip-scene.a {
+  background: var(--scene-a);
+}
+
+.strip-scene.b {
+  background: var(--scene-b);
+}
+
+.mini-strip.placeholder {
+  cursor: default;
+}
+
+.mini-strip > canvas {
+  display: block;
+  width: 100%;
+  height: 16px;
+  border-radius: 3px;
+  background: var(--bg-raised);
+}
+
+.strip-preview {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+  transform: translateX(-50%);
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-m);
+  font-size: var(--fs-s);
+  pointer-events: none;
+}
+
+.strip-preview canvas {
+  display: block;
+  width: 128px;
+  height: auto;
+  border-radius: var(--radius-s);
+}
+
+.tl-strip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 34px;
+  height: 48px;
+  z-index: 3;
+  cursor: pointer;
+}
+
+.tl-strip > canvas {
+  display: block;
+  width: 100%;
+  height: 48px;
+  border-radius: var(--radius-s);
+  background: var(--bg-app);
+}
+
+.timeline.has-strip .track {
+  top: 90px;
+}
+
+.timeline.has-strip .tl-tooltip {
+  top: 192px;
+}
+
+.tl-strip .strip-preview {
+  bottom: auto;
+  top: calc(100% + 6px);
+}
+
+.waveform {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.progress-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: 10px;
+  padding: 2px 10px 2px 6px;
+  border-radius: 999px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: var(--fs-s);
+  white-space: nowrap;
+}
+
+/* The one progress band (Progress.tsx): head (spinner, title, Stop), bar with count and time left, note. */
+.progress-band {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  /* A whole row of its own inside a wrapping flex row (the compact translation box). */
+  flex: 1 1 100%;
+}
+
+.progress-band.band,
+.progress-band.flush {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-raised);
+}
+
+/* At the top of a side panel's body (Shorten with AI). */
+.progress-band.flush {
+  margin: -16px -18px 0;
+}
+
+.progress-head,
+.progress-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.progress-line {
+  gap: 10px;
+}
+
+.progress-line .tnum {
+  white-space: nowrap;
+}
+
+.progress-line .bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-raised);
+  overflow: hidden;
+}
+
+.progress-band.band .bar,
+.progress-band.flush .bar {
+  background: var(--border);
+}
+
+.progress-line .bar > div {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.2s;
+}
+
+.row-actions.locked {
+  opacity: 0.4;
+  pointer-events: none;
+}
+
+.badge-pct {
+  display: inline-block;
+  min-width: 5.2ch;
+  text-align: right;
+}
+
+.progress-badge .spinner {
+  width: 12px;
+  height: 12px;
+}
+
+.block {
+  position: absolute;
+  top: 8px;
+  height: 80px;
+  padding: 6px 10px;
+  background: var(--cue-fill);
+  border: 1px solid var(--cue-border);
+  border-radius: var(--radius-s);
+  font-size: var(--fs-s);
+  line-height: 1.35;
+  color: var(--cue-text);
+  overflow: hidden;
+  cursor: grab;
+}
+
+.block.spot-ghost {
+  pointer-events: none;
+  border: 2px dashed var(--accent);
+  background: var(--accent-soft-bg);
+  color: var(--accent-soft-text);
+  white-space: nowrap;
+  z-index: 3;
+}
+
+.block.hi {
+  background: var(--cue-hi-fill);
+  border-color: var(--cue-hi-border);
+}
+
+.block.warn {
+  border-bottom: 3px solid var(--warn);
+}
+
+.block.selected {
+  background: var(--cue-sel-fill);
+  border-color: var(--accent);
+  color: var(--cue-sel-text);
+  z-index: 2;
+}
+
+/* Still a problem while selected: the red bar stays, so a fix shows at once. */
+.block.selected.warn {
+  border-bottom-color: var(--warn);
+}
+
+.block.dragging {
+  cursor: grabbing;
+}
+
+.block-src {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: var(--fs-xs);
+}
+
+.block-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  white-space: pre-line;
+  pointer-events: none;
+}
+
+.handle {
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  width: 8px;
+  cursor: ew-resize;
+  z-index: 3;
+}
+
+.handle.l {
+  left: -1px;
+}
+
+.handle.r {
+  right: -1px;
+}
+
+.block.selected .handle {
+  background: var(--accent);
+  width: 6px;
+}
+
+.block.selected .handle.l {
+  border-radius: 4px 0 0 4px;
+}
+
+.block.selected .handle.r {
+  border-radius: 0 4px 4px 0;
+}
+
+.playhead {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  margin-left: -1px;
+  background: var(--accent);
+  pointer-events: none;
+  z-index: 5;
+  will-change: transform;
+}
+
+.playhead::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -6px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid var(--accent);
+}
+
+.tl-hint {
+  position: absolute;
+  left: 0;
+  bottom: 10px;
+  pointer-events: none;
+  display: flex;
+  gap: 16px;
+  font-size: var(--fs-s);
+  color: var(--text-dim);
+}
+
+.tl-tooltip {
+  position: absolute;
+  top: 146px;
+  z-index: 6;
+  padding: 6px 8px;
+  background: var(--bg-raised);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-s);
+  font-size: var(--fs-s);
+  pointer-events: none;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-empty {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 16px 14px;
+  background: var(--bg-app);
+  border-radius: var(--radius-s);
+  color: var(--text-dim);
+}
+
+/* ⌥ over the dialogue: the line of speech an ⌥-click makes a subtitle of (Timeline.tsx). */
+.dialogue-pick {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  border: 1px dashed var(--accent);
+  border-radius: var(--radius-s);
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  pointer-events: none;
+}

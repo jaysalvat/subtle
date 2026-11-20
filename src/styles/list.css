@@ -1,0 +1,336 @@
+/* Subtitle list rows and their text field (CueList.tsx). */
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 8px;
+  background: var(--bg-app);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-m);
+  color: var(--text-muted);
+  width: 160px;
+}
+
+.search input {
+  all: unset;
+  flex: 1;
+  min-width: 0;
+  color: var(--text);
+  font-size: var(--fs-m);
+}
+
+.search-clear {
+  display: flex;
+  padding: 2px;
+  border: 0;
+  border-radius: var(--radius-s);
+  background: none;
+  color: var(--text-muted);
+}
+
+.search-clear:hover {
+  color: var(--text-strong);
+  background: var(--bg-raised);
+}
+
+.rows {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  scrollbar-color: var(--border-strong) transparent;
+}
+
+.row {
+  position: relative;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-soft);
+  cursor: default;
+}
+
+.row:hover {
+  background: var(--row-hover);
+}
+
+/* Every other subtitle barely lighter (a layer: hover, selected and active keep their colour). */
+.row.alt {
+  background-image: linear-gradient(var(--row-alt), var(--row-alt));
+}
+
+.row.selected {
+  background: var(--selected-row);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+
+/* Several selected: they alternate too, so each one still reads as its own row. */
+.row.selected.alt {
+  background-image: linear-gradient(var(--row-alt-selected), var(--row-alt-selected));
+}
+
+.row.active .num {
+  color: var(--accent);
+}
+
+.row-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--fs-s);
+  font-variant-numeric: tabular-nums;
+}
+
+.row-meta .num {
+  width: 5ch;
+  text-align: right;
+  color: var(--text-dim);
+}
+
+/* While translating: which language is edited (CueList EditSideSwitch). */
+.edit-side {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--border-soft);
+  font-size: var(--fs-s);
+}
+
+/* CueNumber.tsx: a subtitle number in any list, right-aligned, muted. */
+.cue-n {
+  flex: none;
+  display: inline-block;
+  min-width: 5ch;
+  /* Right-aligned: a bit of air before the next column's text. */
+  margin-right: 8px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font: inherit;
+  text-align: right;
+}
+
+button.cue-n {
+  cursor: pointer;
+  color: var(--accent);
+}
+
+button.cue-n:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.row-meta .tc {
+  color: var(--icon);
+}
+
+.row-text {
+  padding-left: 38px;
+  margin-top: 4px;
+  font-size: var(--fs-l);
+  line-height: 1.4;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.row-text.hi {
+  color: var(--hi);
+}
+
+.row-text.editable {
+  min-height: 1.4em;
+  border-radius: var(--radius-s);
+}
+
+/* The selected subtitle's text: a click on it opens the field. */
+.row.selected .row-text.editable {
+  cursor: text;
+}
+
+/* Under the pointer: a light background behind the text only (the row's indent is untouched). */
+.row.selected .row-text.editable:hover {
+  background: var(--bg-raised);
+  background-clip: content-box;
+}
+
+.row-text.src {
+  color: var(--text-dim);
+  font-size: var(--fs-m);
+}
+
+/* Missing translation: plain yellowish text under the source. */
+.row-text.empty {
+  color: var(--accent-soft-text);
+  opacity: 0.75;
+}
+
+.row textarea[data-field='target']::placeholder {
+  color: var(--accent-soft-text);
+  opacity: 0.7;
+}
+
+.row textarea {
+  display: block;
+  width: calc(100% - 38px);
+  margin: 4px 0 0 38px;
+  resize: none;
+  background: var(--bg-app);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-s);
+  color: var(--text);
+  font-size: var(--fs-l);
+  line-height: 1.4;
+  padding: 6px 8px;
+  overflow: hidden;
+}
+
+.row textarea:focus {
+  outline: none;
+  border-color: var(--accent-soft-border);
+}
+
+.row-warn {
+  padding-left: 38px;
+  margin-top: 4px;
+  font-size: var(--fs-s);
+  color: var(--warn);
+}
+
+.row-actions {
+  padding-left: 38px;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.row-progress {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+}
+
+textarea.italic {
+  font-style: italic;
+}
+
+.pos-badge {
+  padding: 0 6px;
+  border-radius: 8px;
+  background: var(--cue-hi-fill);
+  color: var(--hi);
+  font-size: var(--fs-xs);
+}
+
+.icon-btn.pressed {
+  color: var(--accent);
+  background: var(--accent-soft-bg);
+}
+
+/* Subtitle shown at the top: a bar along the top of its block. */
+.block.top {
+  border-top: 3px solid var(--hi);
+}
+
+.cps-warn {
+  color: var(--warn);
+  font-weight: 500;
+}
+
+.back-to-current {
+  position: absolute;
+  left: 50%;
+  bottom: 14px;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* ColourPicker.tsx (Pro mode): the subtitle's colour in its row, five to pick, none, other. */
+.colour-picker {
+  position: relative;
+}
+
+.colour-dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--border-strong);
+}
+
+/* No colour: white, the subtitle's own colour. */
+.colour-dot.none {
+  background: var(--subtitle-white);
+}
+
+.colour-pop {
+  min-width: 190px;
+}
+
+.colour-swatches {
+  display: flex;
+  gap: 8px;
+  padding: 8px 10px;
+}
+
+.colour-swatch {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  box-shadow: 0 0 0 1px var(--border-strong);
+  cursor: pointer;
+}
+
+.colour-swatch.on,
+.colour-swatch:hover {
+  border-color: var(--bg-raised);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.colour-swatches {
+  flex-wrap: wrap;
+}
+
+.colour-section {
+  padding-bottom: 0;
+}
+
+/* + : the system's colour picker, its input hidden over the swatch (a click on the label opens it). */
+.colour-add {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--text-muted);
+}
+
+.colour-add input[type='color'] {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+/* No colour / Other colour: the dot or the picker beside the name. */
+.colour-pop .menu-item {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+/* The picker a ⇧-click on one of Others opens: no place of its own. */
+.colour-recolour {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}

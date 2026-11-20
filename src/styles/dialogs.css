@@ -1,0 +1,483 @@
+/* Windows (components/dialogs): shell, fields, number inputs, shortcuts, previews. */
+
+/* ---------- Dialogs ---------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--backdrop);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.dialog {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-l);
+  box-shadow: var(--shadow-dialog);
+}
+
+.dialog.wide {
+  width: min(760px, calc(100vw - 32px));
+}
+
+.confirm-backdrop {
+  z-index: 60;
+}
+
+.dialog.confirm {
+  width: min(420px, calc(100vw - 32px));
+}
+
+.confirm-body {
+  padding: 20px 20px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  line-height: 1.5;
+}
+
+.confirm-body h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.confirm-body p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.dialog.confirm .dialog-foot {
+  border-top: none;
+  padding-top: 0;
+  padding-bottom: 16px;
+  /* Long button names wrap to a second row rather than spill out of the window. */
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+/* Three choices (Cancel, another way, the main one): a wider window. */
+.dialog.confirm:has(.dialog-foot .btn:nth-child(3)) {
+  width: min(600px, calc(100vw - 32px));
+}
+
+.btn.danger-solid {
+  background: var(--warn);
+  border-color: var(--warn);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.btn.danger-solid:hover:not(:disabled) {
+  background: var(--warn);
+  filter: brightness(1.1);
+}
+
+/* A paragraph without its default margins (the window's gap spaces it). */
+.flush {
+  margin: 0;
+}
+
+.dialog:focus {
+  outline: none;
+}
+
+.dialog-head {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+}
+
+.dialog-head h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.dialog-body {
+  padding: 16px 18px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  line-height: 1.5;
+}
+
+.dialog-foot {
+  padding: 12px 18px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  align-items: center;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  align-items: center;
+  gap: 12px;
+}
+
+.field label {
+  color: var(--text-muted);
+}
+
+/* A label above a wide field (a text to type: an instruction). */
+.field.stack {
+  grid-template-columns: 1fr;
+  gap: 6px;
+}
+
+.input,
+.select {
+  height: 30px;
+  padding: 0 8px;
+  background: var(--bg-app);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-s);
+  color: var(--text);
+}
+
+/* Our own chevron (the browser's sits against the edge on macOS, padding or not), like ComboBox's. */
+.select {
+  appearance: none;
+  padding-right: 32px;
+  background-image: var(--select-chevron);
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 14px;
+}
+
+/* NumberInput.tsx: the browser's spinners hidden, ours on the right. */
+.num-field {
+  position: relative;
+  display: inline-flex;
+  width: 110px;
+}
+
+.input.num {
+  width: 100%;
+  padding-right: 26px;
+  font-variant-numeric: tabular-nums;
+  appearance: textfield;
+}
+
+.input.num::-webkit-inner-spin-button,
+.input.num::-webkit-outer-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.num-steps {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  bottom: 3px;
+  display: flex;
+  flex-direction: column;
+  width: 18px;
+  gap: 1px;
+}
+
+.num-step {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 3px;
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+}
+
+.num-step:hover:not(:disabled) {
+  background: var(--bg-raised);
+  color: var(--text);
+}
+
+.num-step:active:not(:disabled) {
+  color: var(--accent);
+}
+
+.num-step:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+.num-field:not(:hover):not(:focus-within) .num-step:not(:disabled) {
+  opacity: 0.6;
+}
+
+.input:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--accent-soft-border);
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.check input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.radio-row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.radio-row label {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.radio-row input {
+  accent-color: var(--accent);
+}
+
+.group-title {
+  font-weight: 600;
+  margin-top: 4px;
+}
+
+/* Same height whatever the search finds: the window doesn't jump while typing. */
+.dialog.shortcuts-dialog {
+  height: min(640px, calc(100vh - 64px));
+}
+
+.shortcuts-dialog .dialog-body {
+  flex: 1;
+  min-height: 0;
+}
+
+/* Stays in view while the list scrolls, on the window's background (the list passes under it). */
+.shortcut-search-bar {
+  position: sticky;
+  top: -16px;
+  z-index: 1;
+  flex: none;
+  display: flex;
+  justify-content: flex-end;
+  margin: -16px -18px 0;
+  padding: 16px 18px 8px;
+  background: var(--bg-panel);
+}
+
+.shortcut-search {
+  width: min(360px, 100%);
+}
+
+.shortcut-groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 8px 28px;
+}
+
+.shortcut-list {
+  margin: 6px 0 0;
+}
+
+.shortcut-list > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.shortcut-list dt {
+  flex: 0 0 132px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+}
+
+.shortcut-list .combo {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.shortcut-list .plus,
+.shortcut-list .or {
+  color: var(--text-dim);
+  font-size: var(--fs-xs);
+}
+
+.shortcut-list .or {
+  margin: 0 3px;
+}
+
+.shortcut-list dd {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+kbd {
+  min-width: 22px;
+  padding: 1px 6px;
+  border: 1px solid var(--border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-s);
+  background: var(--bg-sunken);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--fs-s);
+  text-align: center;
+}
+
+.note {
+  color: var(--text-dim);
+  font-size: var(--fs-s);
+}
+
+/* What a tool will do, one sentence a line. */
+.summary {
+  white-space: pre-line;
+  padding: 10px 12px;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+}
+
+.diff {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border-soft);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-s);
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.diff-row {
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  gap: 10px;
+  padding: 8px 10px;
+  background: var(--bg-sunken);
+  font-size: var(--fs-s);
+  white-space: pre-wrap;
+}
+
+.diff-row .before {
+  color: var(--text-dim);
+  text-decoration: line-through;
+  text-decoration-color: var(--text-disabled);
+}
+
+.diff-row .after.removed {
+  color: var(--warn);
+  font-style: italic;
+}
+
+/* Fix punctuation: small changes, so no strike-through, and no-break spaces highlighted. */
+.diff.punct .before {
+  text-decoration: none;
+}
+
+.diff-row .nbsp {
+  display: inline-block;
+  min-width: 0.3em;
+  border-radius: 2px;
+  background: var(--accent-soft-border);
+}
+
+/* Settings › App: the install button with what it gives beside it. */
+/* Settings › General, first: an invitation to install, framed in the soft accent like a chosen card. */
+.install-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--btn-soft-border);
+  border-radius: var(--radius-m);
+  background: var(--accent-soft-bg);
+}
+
+.install-card > span {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.install-card .btn.primary {
+  flex: none;
+}
+
+/* Several lines to type: as tall as its rows. */
+textarea.input {
+  height: auto;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  resize: vertical;
+  line-height: 1.4;
+}
+
+/*
+ * Windows and side panels whose content scrolls: a shadow over the bottom, above the buttons, while
+ * there's more below (a hollow, content underneath); gone at the end, and when nothing scrolls (the
+ * scroll timeline is inactive then).
+ */
+.dialog,
+.side-panel {
+  timeline-scope: --more-below;
+}
+
+.dialog-body,
+.side-panel > :not(.dialog-head, .dialog-foot) {
+  scroll-timeline: --more-below y;
+}
+
+.dialog-foot {
+  position: relative;
+}
+
+.dialog-foot::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 16px;
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--scroll-shadow));
+  opacity: 0;
+  animation: more-below linear both;
+  animation-timeline: --more-below;
+}
+
+@keyframes more-below {
+  from,
+  96% {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+/* Translate › Start from a file: the translation's drop zone, under the cards. */
+.translate-drop {
+  flex: none;
+  min-height: 110px;
+  gap: 6px;
+}
