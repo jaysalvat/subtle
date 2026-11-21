@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- Settings › Credits shows the build's commit next to the version.
+
 ## 2.1.0
 
 ### New tools

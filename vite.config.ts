@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
+import { execSync } from 'node:child_process';
 import { defineConfig, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 
@@ -71,6 +72,15 @@ function ortFromCdn(): Plugin {
 /** Subtle's own version (package.json), shown in Settings › Credits. */
 const appVersion: string = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
 
+/** The commit built (short), shown next to the version: which build runs between two releases. '' outside git. */
+function buildCommit(): string {
+  try {
+    return execSync('git rev-parse --short HEAD', { encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim();
+  } catch {
+    return '';
+  }
+}
+
 /** The installed ONNX Runtime's version: Whisper's engine is fetched from jsDelivr at that exact version. */
 const ortVersion: string = JSON.parse(readFileSync(new URL('./node_modules/onnxruntime-web/package.json', import.meta.url), 'utf8')).version;
 
@@ -78,5 +88,5 @@ export default defineConfig({
   // Where the app is served: '/' by default, '/subtle/' on GitHub Pages (BASE_PATH, .github/workflows/pages.yml).
   base: process.env.BASE_PATH || '/',
   plugins: [react(), reloadOnStateChange(), ortFromCdn(), subtleServiceWorker()],
-  define: { __ORT_VERSION__: JSON.stringify(ortVersion), __APP_VERSION__: JSON.stringify(appVersion) },
+  define: { __ORT_VERSION__: JSON.stringify(ortVersion), __APP_VERSION__: JSON.stringify(appVersion), __APP_COMMIT__: JSON.stringify(buildCommit()) },
 });
