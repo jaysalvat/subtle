@@ -22,6 +22,7 @@ import {
 import { useThumbs } from '../store/thumbs';
 import { player, usePlayback } from '../store/playback';
 import { editField, toolSide, useApp } from '../store/store';
+import { openToolOn } from '../store/toolRequest';
 import { restoreTargets, viewOf } from '../lib/translation';
 import { useWaveform } from '../store/waveform';
 import { SidePanel } from './SidePanel';
@@ -32,6 +33,16 @@ import { aiProblem } from '../mt/ai';
 const close = () => useApp.getState().openDialog(null);
 
 const NO_IDS: string[] = [];
+
+/** Each problem's own tool (same pure function as Fix): Adjust opens it on the subtitles that have it. */
+const TOOL_OF: Partial<Record<AuditKind, { dialog: 'spaceOut' | 'minDuration' | 'balance' | 'hi'; name: string }>> = {
+  overlap: { dialog: 'spaceOut', name: t.tools.spaceOut },
+  gap: { dialog: 'spaceOut', name: t.tools.spaceOut },
+  tooShort: { dialog: 'minDuration', name: t.tools.minDuration },
+  tooFast: { dialog: 'minDuration', name: t.tools.minDuration },
+  lines: { dialog: 'balance', name: t.tools.balance },
+  hi: { dialog: 'hi', name: t.tools.cleanHi },
+};
 
 export function QualityPanel() {
   const doc = useApp((s) => s.doc)!;
@@ -149,6 +160,11 @@ export function QualityPanel() {
             <button className="btn sm tnum" title={tq.showHint} onClick={() => show(k)}>
               {shown[k] !== undefined && n > 1 ? tq.showAt(shown[k]! + 1, n) : tq.show}
             </button>
+            {TOOL_OF[k] && (
+              <button className="btn sm" title={tq.adjustHint(TOOL_OF[k].name)} onClick={() => openToolOn(TOOL_OF[k]!.dialog, report.ids[k] ?? [])}>
+                {tq.adjust}
+              </button>
+            )}
             {fixable && (
               <button className="btn sm primary-soft" onClick={() => fix(k)}>
                 {tq.fix}

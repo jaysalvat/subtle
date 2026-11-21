@@ -670,6 +670,27 @@ describe('machine translation text', () => {
   });
 });
 
+describe('space out subtitles (Tools › Space out subtitles, Check quality)', async () => {
+  const { spaceOut } = await import('./tools');
+  const cues = [cue(0, 1500, 'a', 'a'), cue(1450, 3000, 'b', 'b'), cue(3050, 3200, 'c', 'c'), cue(3250, 5000, 'd', 'd')];
+  it('ends move back to keep the gap, starts never move', () => {
+    const r = spaceOut(cues, 100);
+    expect(r.cues.map((c) => [c.start, c.end])).toEqual([
+      [0, 1350],
+      [1450, 2950],
+      [3050, 3200],
+      [3250, 5000],
+    ]);
+    expect(r.spaced).toEqual(['a', 'b']);
+  });
+  it('a subtitle that would get too short stays, listed', () => {
+    expect(spaceOut(cues, 100).blocked).toEqual(['c']);
+  });
+  it('only the selected ends', () => {
+    expect(spaceOut(cues, 100, ['b']).spaced).toEqual(['b']);
+  });
+});
+
 describe('balance lines (Tools › Balance lines, Check quality, translation)', async () => {
   const { balanceText, balanceCueText, balanceLines } = await import('./lines');
   it('one line when it fits', () => {

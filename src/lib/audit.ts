@@ -6,7 +6,7 @@
 import type { Span } from './audio/speech';
 import { hasColour, withoutColours } from './colour';
 import { balanceCueText } from './lines';
-import { charCount, extendToMinDuration, sortCues, visibleText } from './tools';
+import { charCount, extendToMinDuration, sortCues, spaceOut, visibleText } from './tools';
 import type { Cue, Settings } from './types';
 
 export interface Profile {
@@ -135,16 +135,8 @@ export function audit(cues: Cue[], p: Profile, spans: Span[] | null): AuditResul
 
 /* ---------------- Fixes ---------------- */
 
-/** End before the next subtitle starts, with the gap (overlaps and too-small gaps). Start untouched. */
-export function fixGaps(cues: Cue[], p: Profile, floorMs = 300): Cue[] {
-  const list = sortCues(cues);
-  return list.map((c, i) => {
-    const next = list[i + 1];
-    if (!next || next.start - c.end >= p.minGapMs) return c;
-    const end = next.start - p.minGapMs;
-    return end - c.start >= floorMs ? { ...c, end } : c;
-  });
-}
+/** End before the next subtitle starts, with the gap (overlaps and too-small gaps): Tools › Space out subtitles. */
+export const fixGaps = (cues: Cue[], p: Profile): Cue[] => spaceOut(cues, p.minGapMs).cues;
 
 /** Too short, or too fast to read: lengthen the end as far as the next subtitle allows. */
 export function fixDurations(cues: Cue[], p: Profile): Cue[] {

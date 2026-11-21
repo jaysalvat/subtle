@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- **Space out subtitles**: no overlaps, a gap before the next one, only ends moved, previewed on the timeline.
+- Check quality: **Adjust** opens a problem's own tool on the subtitles that have it, to tune it before applying.
+
 - **Balance lines**: one line when the text fits, else two cut where a subtitler would (after a comma, before "and", never after "the"). Check quality's fix of long lines and machine translations cut the same way.
 
 - Settings › Credits shows the build's commit next to the version.

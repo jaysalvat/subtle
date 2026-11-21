@@ -34,6 +34,7 @@ export type DialogName =
   | 'zipSubs'
   | 'hi'
   | 'balance'
+  | 'spaceOut'
   | 'punctuation'
   | 'replace'
   | 'stt'
@@ -65,6 +66,7 @@ export const NON_MODAL: DialogName[] = [
   'replace',
   'hi',
   'balance',
+  'spaceOut',
   'punctuation',
 ];
 

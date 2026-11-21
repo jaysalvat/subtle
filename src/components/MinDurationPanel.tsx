@@ -5,7 +5,8 @@
  */
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { t } from '../i18n';
-import { extendToMinDuration, type ShiftScope } from '../lib/tools';
+import { extendToMinDuration } from '../lib/tools';
+import { useToolScope } from '../store/toolRequest';
 import { goToCue } from '../actions';
 import { useApp } from '../store/store';
 import { CueNumber } from './CueNumber';
@@ -22,7 +23,7 @@ export function MinDurationPanel() {
   const [minS, setMinS] = useState(settings.minDurationMs / 1000);
   const [gap, setGap] = useState(settings.minGapMs);
   const [cpsBased, setCpsBased] = useState(settings.cpsBasedMinDuration);
-  const [scope, setScope] = useState<ShiftScope>('all');
+  const [scope, setScope] = useToolScope('minDuration');
 
   const result = useMemo(
     () =>

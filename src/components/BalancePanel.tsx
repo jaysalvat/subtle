@@ -6,7 +6,7 @@
 import { useMemo, useState } from 'react';
 import { t } from '../i18n';
 import { balanceLines } from '../lib/lines';
-import type { ShiftScope } from '../lib/tools';
+import { useToolScope } from '../store/toolRequest';
 import { editField, useApp } from '../store/store';
 import { DiffPreview, Scope, close } from './dialogs/Dialog';
 import { NumberInput } from './NumberInput';
@@ -19,7 +19,7 @@ export function BalancePanel() {
   const lang = useApp((s) => (field === 'target' ? s.translation?.targetLang : s.doc?.lang));
   const maxLineLength = useApp((s) => s.settings.maxLineLength);
   const [max, setMax] = useState(maxLineLength);
-  const [scope, setScope] = useState<ShiftScope>('all');
+  const [scope, setScope] = useToolScope('balance');
   const result = useMemo(
     () => balanceLines(doc.cues, max, lang, field, scope === 'selection' ? selection : undefined),
     [doc.cues, max, lang, field, scope, selection],
