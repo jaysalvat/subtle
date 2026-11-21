@@ -69,7 +69,7 @@ export async function translateCues(
           }
           todo.forEach((c, i) => {
             const tr = got.get(i + 1);
-            if (tr) out.set(c.id, mtOutput(c.text, tr, maxLineLength));
+            if (tr) out.set(c.id, mtOutput(c.text, tr, maxLineLength, target));
           });
           todo = todo.filter((c) => !out.has(c.id));
           if (opts.signal?.aborted) break;
@@ -89,7 +89,7 @@ export async function translateCues(
         try {
           // Dialogue: one speaker at a time, so the engine can't run them together.
           const parts = await Promise.all(input.split('\n').map((l) => session.translate!(l)));
-          out.set(c.id, mtOutput(c.text, parts.join('\n'), maxLineLength));
+          out.set(c.id, mtOutput(c.text, parts.join('\n'), maxLineLength, target));
         } catch (e) {
           if (opts.signal?.aborted) break;
           throw e;

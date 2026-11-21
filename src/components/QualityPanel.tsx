@@ -21,7 +21,7 @@ import {
 } from '../lib/audit';
 import { useThumbs } from '../store/thumbs';
 import { player, usePlayback } from '../store/playback';
-import { toolSide, useApp } from '../store/store';
+import { editField, toolSide, useApp } from '../store/store';
 import { restoreTargets, viewOf } from '../lib/translation';
 import { useWaveform } from '../store/waveform';
 import { SidePanel } from './SidePanel';
@@ -71,7 +71,9 @@ export function QualityPanel() {
   const chosen = current !== 'mine' ? CONVENTIONS[current] : undefined;
   // The settings' rules, plus what only a convention says (white text only).
   const whiteOnly = !!chosen?.whiteOnly;
-  const profile = useMemo(() => ({ ...profileFromSettings(settings), whiteOnly }), [settings, whiteOnly]);
+  // The language checked, so long lines are cut with its words.
+  const lang = useApp((s) => (editField(s) === 'target' ? s.translation?.targetLang : s.doc?.lang));
+  const profile = useMemo(() => ({ ...profileFromSettings(settings), whiteOnly, lang }), [settings, whiteOnly, lang]);
   const report = useMemo(() => audit(seen, profile, spans), [seen, profile, spans]);
   // The gap is in frames: when the video's frame rate becomes known, the chosen convention follows it.
   useEffect(() => {

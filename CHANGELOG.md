@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Balance lines**: one line when the text fits, else two cut where a subtitler would (after a comma, before "and", never after "the"). Check quality's fix of long lines and machine translations cut the same way.
+
 - Settings › Credits shows the build's commit next to the version.
 
 ## 2.1.0

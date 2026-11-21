@@ -33,6 +33,7 @@ export type DialogName =
   | 'syncRef'
   | 'zipSubs'
   | 'hi'
+  | 'balance'
   | 'punctuation'
   | 'replace'
   | 'stt'
@@ -63,6 +64,7 @@ export const NON_MODAL: DialogName[] = [
   'syncRef',
   'replace',
   'hi',
+  'balance',
   'punctuation',
 ];
 

@@ -2,6 +2,7 @@
  * Machine translation: what goes to the engine and how the result comes back as a subtitle.
  * Engines translate plain sentences; markup, line breaks and italics are handled here.
  */
+import { balanceText } from './lines';
 import { editableText, isItalic, setItalic } from './markup';
 
 const DASH = /^[-–—]\s*/;
@@ -76,21 +77,14 @@ export function dialogueLines(translated: string, speakers: number, sourceLines:
   return dash(groups.map((g) => g.join(' ')));
 }
 
-/** Two lines when too long for one, split at the space closest to the middle. */
-export function fitLines(text: string, maxLineLength: number): string {
-  const t = text.replace(/\s+/g, ' ').trim();
-  if (t.length <= maxLineLength) return t;
-  const mid = t.length / 2;
-  let best = -1;
-  for (let i = 0; i < t.length; i++) if (t[i] === ' ' && (best < 0 || Math.abs(i - mid) < Math.abs(best - mid))) best = i;
-  return best < 0 ? t : `${t.slice(0, best)}\n${t.slice(best + 1)}`;
-}
+/** One line when it fits, else two cut where a subtitler would (lib/lines.ts). */
+export const fitLines = (text: string, maxLineLength: number, lang?: string) => balanceText(text.replace(/\s+/g, ' ').trim(), maxLineLength, lang);
 
 /**
  * The engine's result as a translation: italic when the original is. Line breaks the engine chose
  * are kept when they fit (two lines at most, each short enough); otherwise the text is re-split.
  */
-export function mtOutput(source: string, translated: string, maxLineLength: number): string {
+export function mtOutput(source: string, translated: string, maxLineLength: number, lang?: string): string {
   const plain = editableText(source);
   if (isDialogue(plain)) {
     const srcLines = mtInput(source).split('\n');
@@ -102,7 +96,7 @@ export function mtOutput(source: string, translated: string, maxLineLength: numb
     .split(/\s*\n\s*/)
     .map((l) => l.replace(/\s+/g, ' ').trim());
   const fits = lines.length <= 2 && lines.every((l) => l && l.length <= maxLineLength);
-  const text = fits ? lines.join('\n') : fitLines(translated, maxLineLength);
+  const text = fits ? lines.join('\n') : fitLines(translated, maxLineLength, lang);
   return isItalic(source) ? setItalic(text, true) : text;
 }
 

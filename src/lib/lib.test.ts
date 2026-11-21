@@ -670,6 +670,48 @@ describe('machine translation text', () => {
   });
 });
 
+describe('balance lines (Tools › Balance lines, Check quality, translation)', async () => {
+  const { balanceText, balanceCueText, balanceLines } = await import('./lines');
+  it('one line when it fits', () => {
+    expect(balanceText('Where were\nyou?', 42, 'en')).toBe('Where were you?');
+  });
+  it('cuts before a conjunction rather than after an article', () => {
+    expect(balanceText('Alright, sprites, let’s burn the bodies and have some peppermint tea.', 42, 'en')).toBe(
+      'Alright, sprites, let’s burn the bodies\nand have some peppermint tea.',
+    );
+    expect(balanceText('Je ne sais pas pourquoi tu es venu ici ce soir, mon ami.', 42, 'fr')).not.toMatch(/tu es\n/);
+  });
+  it('keeps names together and prefers a punctuation', () => {
+    expect(balanceText('We were going to meet John Smith at the station tonight.', 42, 'en')).not.toMatch(/John\nSmith/);
+    expect(balanceText('I know. But we can’t stay here tonight, John.', 42, 'en')).toBe('I know.\nBut we can’t stay here tonight, John.');
+  });
+  it('keeps a cut that is already about as good', () => {
+    expect(balanceText('JOHN: Then how did you get back\nto the station?', 42, 'en')).toBe('JOHN: Then how did you get back\nto the station?');
+    expect(balanceText('Alright, sprites, let’s burn the\nbodies and have some peppermint tea.', 42, 'en')).toBe(
+      'Alright, sprites, let’s burn the bodies\nand have some peppermint tea.',
+    );
+  });
+  it('keeps tags on their words, hidden markup and dialogue lines', () => {
+    expect(balanceText('The night <font color="#FFFF00">was dark</font> and full of terrors, my friend.', 42, 'en')).toBe(
+      'The night <font color="#FFFF00">was dark</font> and full\nof terrors, my friend.',
+    );
+    expect(balanceCueText('{\\an8}<i>Alright, sprites, let’s burn the bodies and have some peppermint tea.</i>', 42, 'en')).toBe(
+      '{\\an8}<i>Alright, sprites, let’s burn the bodies\nand have some peppermint tea.</i>',
+    );
+    expect(balanceText('- Did you see the last train leave the station?\n- No.', 42, 'en')).toBe('- Did you see the last train leave the station?\n- No.');
+  });
+  it('only the scope, only the field, changes listed', () => {
+    const cues = [
+      { id: 'a', start: 0, end: 1000, text: 'Short\none.', target: 'Court\nun.' },
+      { id: 'b', start: 1000, end: 2000, text: 'Also\nshort.' },
+    ];
+    const r = balanceLines(cues, 42, 'fr', 'target', ['a']);
+    expect(r.cues[0]).toMatchObject({ text: 'Short\none.', target: 'Court un.' });
+    expect(r.cues[1]).toBe(cues[1]);
+    expect(r.changed).toEqual([{ id: 'a', before: 'Court\nun.', after: 'Court un.' }]);
+  });
+});
+
 describe('AI translation', () => {
   it('keeps the line breaks the model chose when they fit, re-splits otherwise', () => {
     expect(mtOutput('x', 'Où étais-tu\nhier soir ?', 42)).toBe('Où étais-tu\nhier soir ?');

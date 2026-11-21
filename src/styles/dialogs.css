@@ -388,6 +388,20 @@ kbd {
   font-style: italic;
 }
 
+/* Balance lines: the line break is the change, so it shows, and each line has the full width (after under before). */
+.diff.lines .diff-row {
+  grid-template-columns: auto 1fr;
+}
+
+.diff.lines .before,
+.diff.lines .after {
+  white-space: pre-line;
+}
+
+.diff.lines .after {
+  grid-column: 2;
+}
+
 /* Fix punctuation: small changes, so no strike-through, and no-break spaces highlighted. */
 .diff.punct .before {
   text-decoration: none;
