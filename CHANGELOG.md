@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- While translating, Sync by ear, Sync from two times and Convert frame rate show the lines in the language edited.
+
 - **Space out subtitles**: no overlaps, a gap before the next one, only ends moved, previewed on the timeline.
 - Check quality: **Adjust** opens a problem's own tool on the subtitles that have it, to tune it before applying.
 

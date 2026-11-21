@@ -5,7 +5,7 @@ import { byTime } from '../lib/bookmarks';
 import { formatTimecode } from '../lib/time';
 import { useApp } from '../store/store';
 import { addBookmarkHere, goToBookmark } from '../actions';
-import { ChevronDown, CloseX, Plus } from './Icons';
+import { ChevronDown, CloseX } from './Icons';
 import { Pill } from './Pill';
 import { WithKeys } from './Keys';
 
@@ -86,7 +86,7 @@ export function BookmarksMenu() {
           )}
           <button className="menu-item bookmarks-add" onClick={addBookmarkHere}>
             <span>
-              <Plus size={14} /> <WithKeys text={t.bookmarks.add} />
+              <WithKeys text={t.bookmarks.add} />
             </span>
           </button>
         </div>

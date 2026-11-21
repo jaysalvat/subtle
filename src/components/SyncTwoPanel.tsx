@@ -8,7 +8,8 @@ import { Alert } from './Alert';
 import { t } from '../i18n';
 import { applyLinear, linearFromAnchors } from '../lib/tools';
 import { player, usePlayback } from '../store/playback';
-import { useApp } from '../store/store';
+import { toolSide, useApp } from '../store/store';
+import { shownCues } from '../lib/translation';
 import { TimeField } from './dialogs/Dialog';
 import { SidePanel } from './SidePanel';
 import { SubtitlePicker } from './SubtitlePicker';
@@ -16,6 +17,9 @@ import { SubtitlePicker } from './SubtitlePicker';
 export function SyncTwoPanel() {
   const doc = useApp((s) => s.doc)!;
   const base = useRef(doc.cues).current;
+  // The lines read in the language edited.
+  const side = useApp(toolSide);
+  const shown = useMemo(() => shownCues(base, side), [base, side]);
   const [aIdx, setAIdx] = useState(0);
   const [bIdx, setBIdx] = useState(base.length - 1);
   const [aTo, setATo] = useState(base[0].start);
@@ -63,14 +67,14 @@ export function SyncTwoPanel() {
         <p className="note flush">{t.sync.intro}</p>
 
         <div className="group-title">{t.sync.first}</div>
-        <SubtitlePicker cues={base} index={aIdx} onChange={pickA} onGo={goTo} ariaLabel={t.sync.first} />
+        <SubtitlePicker cues={shown} index={aIdx} onChange={pickA} onGo={goTo} ariaLabel={t.sync.first} />
         <div className="sync-two-at">
           <span className="muted">{t.sync.startAt}</span>
           <TimeField label={t.sync.firstTime} value={aTo} onChange={setATo} />
         </div>
 
         <div className="group-title">{t.sync.second}</div>
-        <SubtitlePicker cues={base} index={bIdx} onChange={pickB} onGo={goTo} ariaLabel={t.sync.second} />
+        <SubtitlePicker cues={shown} index={bIdx} onChange={pickB} onGo={goTo} ariaLabel={t.sync.second} />
         <div className="sync-two-at">
           <span className="muted">{t.sync.startAt}</span>
           <TimeField label={t.sync.secondTime} value={bTo} onChange={setBTo} />

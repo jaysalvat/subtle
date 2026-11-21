@@ -5,7 +5,8 @@ import { fpsLabel } from '../lib/fps';
 import { applySync, formatOffset, pickLineAt, speechAt, solveSync, type Anchor } from '../lib/sync';
 import { formatTimecode } from '../lib/time';
 import { player, usePlayback } from '../store/playback';
-import { useApp } from '../store/store';
+import { toolSide, useApp } from '../store/store';
+import { shownCues } from '../lib/translation';
 import { SidePanel } from './SidePanel';
 import { loopAround, type Loop } from '../lib/loop';
 import { setLoopChooser, startLoop, stopLoop, useLoop } from '../store/loop';
@@ -37,6 +38,9 @@ export function SyncAssistant() {
   const notify = useApp((s) => s.notify);
   const time = usePlayback((s) => s.time);
   const base = useRef(doc.cues).current;
+  // The lines read in the language edited (French while translating into French).
+  const side = useApp(toolSide);
+  const shown = useMemo(() => shownCues(base, side), [base, side]);
 
   const [step, setStep] = useState<Step>(1);
   // The n-th line from the start, then from the end: past the opening and before the closing credits.
@@ -183,8 +187,8 @@ export function SyncAssistant() {
         </p>
 
         {/* Top to bottom, as it's used: pick a line, read it, play, watch the dialogue come, press Here. */}
-        <LinePicker cues={base} times={preview} index={index} onPick={pick} onGo={goTo} />
-        <LineTarget text={base[index].text} />
+        <LinePicker cues={shown} times={preview} index={index} onPick={pick} onGo={goTo} />
+        <LineTarget text={shown[index].text} />
         <PanelTransport />
         {hasVideo && (
           <div className="here-stage" style={{ '--here-at': HERE_AT } as React.CSSProperties}>

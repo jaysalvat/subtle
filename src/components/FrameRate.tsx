@@ -5,7 +5,8 @@ import { conversionsFor, convertFps, FPS_CONVERSIONS, fpsLabel, rankConversions,
 import { useThumbs } from '../store/thumbs';
 import type { Cue } from '../lib/types';
 import { player, usePlayback } from '../store/playback';
-import { useApp } from '../store/store';
+import { toolSide, useApp } from '../store/store';
+import { shownText } from '../lib/translation';
 import { useWaveform } from '../store/waveform';
 import { LineTarget } from './LinePicker';
 import { SidePanel } from './SidePanel';
@@ -30,6 +31,8 @@ function testCue(cues: Cue[]): Cue {
  */
 export function FrameRatePanel() {
   const doc = useApp((s) => s.doc)!;
+  // The line to listen for, in the language edited.
+  const side = useApp(toolSide);
   const hasVideo = useApp((s) => !!s.videoUrl);
   const waveform = useWaveform((s) => (s.status === 'ready' ? s.waveform : null));
   const notify = useApp((s) => s.notify);
@@ -136,7 +139,7 @@ export function FrameRatePanel() {
             <div className="side-body">
               <p className="note flush">{waveform ? t.fps.ranked : t.fps.unranked}</p>
               <div className="group-title">{t.fps.tryN(step + 1, tries.length, label(current))}</div>
-              {cue && <LineTarget text={cue.text} label={t.fps.listen} />}
+              {cue && <LineTarget text={shownText(cue, side)} label={t.fps.listen} />}
               <div className="fps-actions">
                 <button className="btn fps-left" onClick={play}>
                   {t.fps.replay}
