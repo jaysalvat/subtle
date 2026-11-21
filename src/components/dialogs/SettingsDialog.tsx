@@ -292,6 +292,8 @@ export function SettingsDialog() {
 
 /** package.json's version, filled in by Vite (define in vite.config.ts). */
 declare const __APP_VERSION__: string;
+/** The commit built ('' outside git): which build runs between two releases. */
+declare const __APP_COMMIT__: string;
 
 const REPO_URL = 'https://github.com/jaysalvat/subtle';
 
@@ -324,7 +326,10 @@ function CreditsPanel() {
         </a>
       </p>
       <p className="note">
-        {tc.version(__APP_VERSION__)} · {tc.source}{' '}
+        {tc.version(__APP_VERSION__)}
+        {__APP_COMMIT__ && ` (${__APP_COMMIT__})`}
+        {' · '}
+        {tc.source}{' '}
         <a href={REPO_URL} target="_blank" rel="noopener noreferrer">
           GitHub
         </a>
