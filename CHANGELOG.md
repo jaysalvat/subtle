@@ -2,14 +2,19 @@
 
 ## Unreleased
 
-- While translating, Sync by ear, Sync from two times and Convert frame rate show the lines in the language edited.
+### New tools
 
-- **Space out subtitles**: no overlaps, a gap before the next one, only ends moved, previewed on the timeline.
-- Check quality: **Adjust** opens a problem's own tool on the subtitles that have it, to tune it before applying.
+- **Balance lines** (Tools › Text): one line when the text fits, else two, cut where a subtitler would: after a comma, before "and", never after "the". Check quality's fix of long lines and machine translations now cut the same way.
+- **Space out subtitles** (Tools › Timing): no overlaps, and a gap before the next subtitle. Only ends move, previewed on the timeline.
 
-- **Balance lines**: one line when the text fits, else two cut where a subtitler would (after a comma, before "and", never after "the"). Check quality's fix of long lines and machine translations cut the same way.
+### Better tools
 
-- Settings › Credits shows the build's commit next to the version.
+- Check quality: **Adjust** opens a problem's own tool on the subtitles that have it, to tune it before applying. **Fix** still does it in one click.
+
+### Also
+
+- While translating, Sync by ear, Sync from two times and Convert frame rate show the lines in the language you're editing.
+- Settings › Credits shows the build's commit next to the version, for bug reports.
 
 ## 2.1.0
 
