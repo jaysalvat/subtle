@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Also
+
+- Links to Subtle show a preview picture in messages and social apps.
+
 ## 2.2.0
 
 ### New tools
