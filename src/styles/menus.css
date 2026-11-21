@@ -325,8 +325,3 @@
   left: 10px;
   top: 10px;
 }
-
-/* An action at the foot of the list: the accent, like the app's links. */
-.menu-item.bookmarks-add {
-  color: var(--accent);
-}

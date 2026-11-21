@@ -691,6 +691,18 @@ describe('space out subtitles (Tools › Space out subtitles, Check quality)', a
   });
 });
 
+describe('the lines to pick from show the language edited', async () => {
+  const { shownCues } = await import('./translation');
+  const cues = [
+    { id: 'a', start: 0, end: 1000, text: 'Hello', target: 'Bonjour' },
+    { id: 'b', start: 1000, end: 2000, text: 'Not yet', target: '' },
+  ];
+  it('the translation while editing it, the original where it is empty or when editing the original', () => {
+    expect(shownCues(cues, 'target').map((c) => c.text)).toEqual(['Bonjour', 'Not yet']);
+    expect(shownCues(cues, 'source').map((c) => c.text)).toEqual(['Hello', 'Not yet']);
+  });
+});
+
 describe('balance lines (Tools › Balance lines, Check quality, translation)', async () => {
   const { balanceText, balanceCueText, balanceLines } = await import('./lines');
   it('one line when it fits', () => {

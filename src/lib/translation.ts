@@ -46,6 +46,13 @@ export function viewOf(cues: Cue[], side: EditSide): Cue[] {
   });
 }
 
+/** A subtitle's text in the language edited (the translation while editing it, the original when it's empty). */
+export const shownText = (c: Cue, side: EditSide) => (side === 'target' && c.target?.trim() ? c.target : c.text);
+
+/** The subtitles to pick from (Sync by ear, Sync from two times…) showing the language edited. */
+export const shownCues = (cues: Cue[], side: EditSide): Cue[] =>
+  cues.some((c) => c.target !== undefined) ? cues.map((c) => ({ ...c, text: shownText(c, side) })) : cues;
+
 /** After a tool ran on `viewOf(…, 'source')`: the translations put back (by id). */
 export function restoreTargets(out: Cue[], original: Cue[]): Cue[] {
   const byId = new Map(original.map((c) => [c.id, c.target]));
