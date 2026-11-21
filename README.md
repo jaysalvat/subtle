@@ -39,7 +39,7 @@ On your computer, no key needed:
 | ------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ |
 | ![Sync by ear](docs/screenshots/sync-by-ear.webp) | ![The Tools menu](docs/screenshots/tools.webp) | ![The start screen](docs/screenshots/start.webp) |
 
-Screenshots: [_Tears of Steel_](https://mango.blender.org) (CC BY 3.0) © Blender Foundation, mango.blender.org.
+Screenshots: [_Sprite Fright_](https://studio.blender.org/films/sprite-fright/) (CC BY) © Blender Foundation, studio.blender.org.
 
 ## Privacy
 
