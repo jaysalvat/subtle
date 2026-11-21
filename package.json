@@ -13,7 +13,8 @@
     "lint": "oxlint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "check": "tsc -b && oxlint && prettier --check . && vitest run"
+    "check": "tsc -b && oxlint && prettier --check . && vitest run",
+    "release": "node scripts/release.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^1.6.0",
