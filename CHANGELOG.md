@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.2.0
+
 ### New tools
 
 - **Balance lines** (Tools › Text): one line when the text fits, else two, cut where a subtitler would: after a comma, before "and", never after "the". Check quality's fix of long lines and machine translations now cut the same way.
