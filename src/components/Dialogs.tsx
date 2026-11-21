@@ -1,4 +1,5 @@
 /** The open window or side panel (store `dialog`), each in its own file under ./dialogs. */
+import { BalancePanel } from './BalancePanel';
 import { AlignPanel } from './AlignPanel';
 import { SyncRefPanel } from './SyncRefPanel';
 import { useApp } from '../store/store';
@@ -56,6 +57,8 @@ export function Dialogs() {
       return <SyncRefPanel />;
     case 'hi':
       return <HiDialog />;
+    case 'balance':
+      return <BalancePanel />;
     case 'punctuation':
       return <PunctuationDialog />;
     case 'replace':

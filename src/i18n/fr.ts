@@ -31,6 +31,8 @@ export const fr: Translation = {
     menu: 'Outils',
     cleanHi: 'Retirer les indications SME/HI',
     cleanHiHint: '[porte qui claque], (soupire), ♪, noms des personnages',
+    balance: 'Équilibrer les lignes',
+    balanceHint: 'Une ligne si elle tient, sinon deux bien coupées',
     removeColours: 'Retirer les couleurs',
     removeColoursHint: 'Tous les sous-titres en blanc',
     removeColoursNone: 'Aucune couleur dans ce fichier',
@@ -832,6 +834,13 @@ export const fr: Translation = {
     cpsBasedNote: (cps: number) => `Lisible à ${cps} cps.`,
     summary: (n: number) => will(n, 'allongé'),
     blocked: (n: number) => `${n} ne ${n > 1 ? 'pourront' : 'pourra'} pas l’être assez, le suivant est trop proche :`,
+  },
+  balance: {
+    intro: 'Coupe après une virgule ou un point, avant « et » ou « mais », jamais après « le » ou « de » ; la ligne du bas un peu plus longue.',
+    max: 'Ligne la plus longue (caractères)',
+    summary: (n: number) => will(n, 'recoupé'),
+    none: 'Tous les sous-titres se lisent déjà bien.',
+    apply: (n: number) => `Recouper ${subs(n)}`,
   },
   hi: {
     labels: {

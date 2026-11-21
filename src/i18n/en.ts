@@ -26,6 +26,8 @@ export const en = {
     menu: 'Tools',
     cleanHi: 'Remove HI tags',
     cleanHiHint: '[door slams], (sighs), ♪, speaker names',
+    balance: 'Balance lines',
+    balanceHint: 'One line when it fits, else two cut well',
     removeColours: 'Remove colours',
     removeColoursHint: 'Every subtitle back to plain white',
     removeColoursNone: 'No colours in this file',
@@ -807,6 +809,13 @@ export const en = {
     cpsBasedNote: (cps: number) => `Readable at ${cps} characters / s.`,
     summary: (n: number) => will(n, 'lengthened'),
     blocked: (n: number) => `${n} can’t be lengthened enough, the next one is too close:`,
+  },
+  balance: {
+    intro: 'Cut after a comma or a full stop, before "and" or "but", never after "the" or "to"; the bottom line a little longer.',
+    max: 'Longest line (characters)',
+    summary: (n: number) => will(n, 're-cut'),
+    none: 'Every subtitle already reads well.',
+    apply: (n: number) => `Re-cut ${subs(n)}`,
   },
   hi: {
     labels: {

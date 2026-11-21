@@ -5,7 +5,7 @@
  */
 import type { Span } from './audio/speech';
 import { hasColour, withoutColours } from './colour';
-import { fitLines } from './mt';
+import { balanceCueText } from './lines';
 import { charCount, extendToMinDuration, sortCues, visibleText } from './tools';
 import type { Cue, Settings } from './types';
 
@@ -17,6 +17,8 @@ export interface Profile {
   minGapMs: number;
   /** White text only: coloured text is a problem (Netflix, Prime Video). */
   whiteOnly?: boolean;
+  /** The language checked: where Fix cuts long lines (lib/lines.ts). */
+  lang?: string;
 }
 
 export type ProfileId = 'mine' | 'netflix' | 'netflixEn' | 'netflixSdh' | 'prime' | 'ted';
@@ -156,7 +158,7 @@ export function fixDurations(cues: Cue[], p: Profile): Cue[] {
   });
 }
 
-/** Lines too long, or more than 2: re-cut into at most 2 balanced lines (when the text fits in 2). */
+/** Lines too long, or more than 2: re-cut like Tools › Balance lines (when the text fits in 2). */
 export function fixLines(cues: Cue[], p: Profile): Cue[] {
   return cues.map((c) => {
     const f = field(c);
@@ -165,7 +167,7 @@ export function fixLines(cues: Cue[], p: Profile): Cue[] {
     if (lines.length <= 2 && lines.every((l) => visibleText(l).trim().length <= p.maxLineLength)) return c;
     // Dialogue lines ("- …") stay one per speaker.
     if (lines.filter((l) => /^\s*[-–—]/.test(visibleText(l))).length > 1) return c;
-    const cut = fitLines(text.replace(/\s*\n\s*/g, ' '), p.maxLineLength);
+    const cut = balanceCueText(text, p.maxLineLength, p.lang);
     return cut.split('\n').every((l) => visibleText(l).length <= p.maxLineLength) ? { ...c, [f]: cut } : c;
   });
 }
