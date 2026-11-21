@@ -2,6 +2,8 @@
 
 **Subtitles, done right.**
 
+**[Open Subtle](https://subtle.jaysalvat.com/app/)** · [Website](https://subtle.jaysalvat.com) · [Guide](https://subtle.jaysalvat.com/docs/)
+
 A subtitle editor that runs entirely in your browser. Edit, retime, sync, clean, check, create and translate subtitles while watching the film. Nothing is uploaded: your video and your subtitles never leave your computer.
 
 **AI built in, on your terms**: bring your own AI (Claude, ChatGPT, DeepSeek, Mistral, Gemini with your key, or a local model through Ollama or LM Studio), or use only the models that run on your computer.
@@ -24,6 +26,10 @@ On your computer, no key needed:
 
 - **Subtitles from the audio** (Whisper), **text in the picture** (OCR), **dialogue detection** that draws the speech on the timeline and lets you **align the subtitles on the voices**.
 
+| A translation side by side                                                                                | Your engine: Chrome, an AI service or a local model                                                                                     |
+| --------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ![The English original and its Spanish translation, side by side](docs/screenshots/more/translation.webp) | ![Settings › Translation: Chrome, an AI service with your key, or a local model through Ollama](docs/screenshots/more/settings-ai.webp) |
+
 ## What it does
 
 - **Files**: subtitles in SRT, VTT, SBV, ASS / SSA, TTML / IMSC (also inside a `.zip`); films in MP4, M4V, MOV, MKV and WebM, including the subtitle tracks inside an MKV. Charset detection (UTF-8, UTF-16, Windows-1252), tags and VTT settings kept.
@@ -35,9 +41,13 @@ On your computer, no key needed:
 - **Translate**: with Chrome's built-in translator, a local model (Ollama, LM Studio) or an AI service with your own key (Claude, ChatGPT, DeepSeek, Mistral, Gemini), or start from an existing translation file; review and shorten with AI.
 - **Work**: projects kept in the browser, save into the subtitle file (Chrome / Edge), export to any format, bookmarks, scene notes, your signature at the start and in the end credits, keyboard shortcuts for everything (press `?`), installable as an offline app, English and French.
 
-| Sync by ear                                       | The Tools menu                                 | Start                                            |
-| ------------------------------------------------- | ---------------------------------------------- | ------------------------------------------------ |
-| ![Sync by ear](docs/screenshots/sync-by-ear.webp) | ![The Tools menu](docs/screenshots/tools.webp) | ![The start screen](docs/screenshots/start.webp) |
+| Sync by ear                                                                  | Check quality                                                                                   | The Tools menu                                 |
+| ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| ![Sync by ear: find the line, press Here](docs/screenshots/sync-by-ear.webp) | ![Check quality: problems by kind, Show, Adjust, Fix](docs/screenshots/more/check-quality.webp) | ![The Tools menu](docs/screenshots/tools.webp) |
+
+| Convert frame rate                                                                                       | Keyboard shortcuts                                              | Projects                                                  |
+| -------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------- |
+| ![Convert frame rate: does the subtitle appear when it's spoken?](docs/screenshots/more/frame-rate.webp) | ![The keyboard shortcuts](docs/screenshots/more/shortcuts.webp) | ![The projects page](docs/screenshots/more/projects.webp) |
 
 Screenshots: [_Sprite Fright_](https://studio.blender.org/films/sprite-fright/) (CC BY) © Blender Foundation, studio.blender.org.
 
