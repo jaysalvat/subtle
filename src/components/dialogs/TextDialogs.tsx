@@ -1,4 +1,5 @@
 /** Text tools: Remove HI tags, Fix punctuation, Find and replace. */
+import { useToolScope } from '../../store/toolRequest';
 import { DEFAULT_REPLACE, findReplace, type ReplaceOptions } from '../../lib/replace';
 import {
   DEFAULT_PUNCT,
@@ -26,7 +27,7 @@ export function HiDialog() {
   const selection = useApp((s) => s.selection);
   const commit = useApp((s) => s.commit);
   const [rules, setRules] = useState<HiRules>(DEFAULT_HI_RULES);
-  const [scope, setScope] = useState<ShiftScope>('all');
+  const [scope, setScope] = useToolScope('hi');
   const result = useMemo(() => cleanHi(doc.cues, rules, scope === 'selection' ? selection : undefined), [doc.cues, rules, scope, selection]);
   const removed = new Set(result.removed);
 

@@ -133,6 +133,7 @@ export function TopBar() {
               { label: t.tools.align, hint: t.tools.alignHint, pill: t.common.ai, disabled: !has, onSelect: () => open('align') },
               { label: t.tools.fps, hint: t.tools.fpsHint, disabled: !has, onSelect: () => open('fps') },
               { label: t.tools.minDuration, hint: t.tools.minDurationHint, disabled: !has, onSelect: () => open('minDuration') },
+              { label: t.tools.spaceOut, hint: t.tools.spaceOutHint, disabled: !has, onSelect: () => open('spaceOut') },
               { section: t.tools.sections.text, label: t.tools.cleanHi, hint: t.tools.cleanHiHint, disabled: !has, onSelect: () => open('hi') },
               { label: t.tools.balance, hint: t.tools.balanceHint, disabled: !has, onSelect: () => open('balance') },
               { label: t.tools.punctuation, hint: t.tools.punctuationHint, disabled: !has, onSelect: () => open('punctuation') },

@@ -124,6 +124,38 @@ export interface MinDurationOptions {
   maxCps: number;
 }
 
+export interface SpaceOutResult {
+  cues: Cue[];
+  /** Ends moved back. */
+  spaced: string[];
+  /** Too close or overlapping, but ending earlier would leave less than the floor duration. */
+  blocked: string[];
+}
+
+/**
+ * Tools › Space out subtitles (and Check quality's fix of overlaps and gaps): each subtitle ends at
+ * least `gapMs` before the next one starts. Only ENDS move, never starts; one left shorter than
+ * `floorMs` stays as it is (blocked). `selected`: only those ends.
+ */
+export function spaceOut(cues: Cue[], gapMs: number, selected?: string[], floorMs = 300): SpaceOutResult {
+  const only = selected && new Set(selected);
+  const list = sortCues(cues);
+  const spaced: string[] = [];
+  const blocked: string[] = [];
+  const out = list.map((c, i) => {
+    const next = list[i + 1];
+    if (!next || next.start - c.end >= gapMs || (only && !only.has(c.id))) return c;
+    const end = next.start - gapMs;
+    if (end - c.start < floorMs) {
+      blocked.push(c.id);
+      return c;
+    }
+    spaced.push(c.id);
+    return { ...c, end };
+  });
+  return { cues: out, spaced, blocked };
+}
+
 export interface MinDurationResult {
   cues: Cue[];
   extended: string[];

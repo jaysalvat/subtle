@@ -42,6 +42,8 @@ export const fr: Translation = {
     syncAssistant: 'Caler à l’oreille',
     syncAssistantHint: 'Écouter deux répliques, tout recaler',
     minDurationHint: 'Laisser le temps de les lire',
+    spaceOut: 'Espacer les sous-titres',
+    spaceOutHint: 'Plus de chevauchements, un écart avant le suivant',
     signHint: 'Vos crédits au début et à la fin',
     syncRef: 'Caler sur un fichier de référence',
     syncRefHint: 'D’après des sous-titres bien calés du même film',
@@ -835,6 +837,14 @@ export const fr: Translation = {
     summary: (n: number) => will(n, 'allongé'),
     blocked: (n: number) => `${n} ne ${n > 1 ? 'pourront' : 'pourra'} pas l’être assez, le suivant est trop proche :`,
   },
+  spaceOut: {
+    intro: 'Chacun finit un écart avant que le suivant commence. Seules les fins bougent.',
+    gap: 'Écart avant le suivant (ms)',
+    summary: (n: number) => will(n, 'raccourci'),
+    blocked: (n: number) =>
+      `${n} deviendrai${n > 1 ? 'ent' : 't'} trop court${n > 1 ? 's' : ''}, laissé${n > 1 ? 's' : ''} tel${n > 1 ? 's' : ''} quel${n > 1 ? 's' : ''} :`,
+    apply: (n: number) => `Espacer ${subs(n)}`,
+  },
   balance: {
     intro: 'Coupe après une virgule ou un point, avant « et » ou « mais », jamais après « le » ou « de » ; la ligne du bas un peu plus longue.',
     max: 'Ligne la plus longue (caractères)',
@@ -1090,6 +1100,8 @@ export const fr: Translation = {
     fix: 'Corriger',
     fixAll: (n: number) => `Corriger ${subs(n)}`,
     fixAllUndo: 'Corriger tous les problèmes de qualité',
+    adjust: 'Régler',
+    adjustHint: (tool: string) => `${tool}, sur ces sous-titres`,
     shorten: {
       intro: 'L’IA propose une version plus courte de chaque sous-titre trop rapide à lire, à accepter une par une.',
       scopeTooFast: (n: number) => (n <= 1 ? 'Le sous-titre trop rapide à lire' : `Les ${n} trop rapides à lire`),

@@ -37,6 +37,8 @@ export const en = {
     syncAssistant: 'Sync by ear',
     syncAssistantHint: 'Listen for two lines, resync everything',
     minDurationHint: 'Leave time to read them',
+    spaceOut: 'Space out subtitles',
+    spaceOutHint: 'No overlaps, a gap before the next one',
     signHint: 'Your credits at the start and the end',
     syncRef: 'Sync from a reference file',
     syncRefHint: 'From well-timed subtitles of the same film',
@@ -810,6 +812,13 @@ export const en = {
     summary: (n: number) => will(n, 'lengthened'),
     blocked: (n: number) => `${n} can’t be lengthened enough, the next one is too close:`,
   },
+  spaceOut: {
+    intro: 'Each one ends a gap before the next starts. Only ends move.',
+    gap: 'Gap before the next one (ms)',
+    summary: (n: number) => will(n, 'shortened'),
+    blocked: (n: number) => `${n} would get too short, left as they are:`,
+    apply: (n: number) => `Space out ${subs(n)}`,
+  },
   balance: {
     intro: 'Cut after a comma or a full stop, before "and" or "but", never after "the" or "to"; the bottom line a little longer.',
     max: 'Longest line (characters)',
@@ -1067,6 +1076,8 @@ export const en = {
     fix: 'Fix',
     fixAll: (n: number) => `Fix ${subs(n)}`,
     fixAllUndo: 'Fix all quality problems',
+    adjust: 'Adjust',
+    adjustHint: (tool: string) => `${tool}, on these subtitles`,
     shorten: {
       intro: 'The AI proposes a shorter version of each subtitle too fast to read, to accept one by one.',
       scopeTooFast: (n: number) => `The ${n} too fast to read`,
