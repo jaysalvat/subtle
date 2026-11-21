@@ -1,0 +1,64 @@
+name: Bug report
+description: Something in Subtle breaks or doesn't do what it says.
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time. Before you start:
+
+        **What can't be exact, and isn't a bug.** Subtle reads the film with models that guess, and a guess is sometimes off:
+        - the **dialogue waveform** (where voices are): it misses quiet or overlapping voices, hears some music or noise as speech, and its edges are a little early or late;
+        - what follows from it: snapping to the voice, **Align on the dialogue**, **Guess from the dialogue**, **Sync from a reference file**;
+        - **Subtitles from the audio** (misheard words), **Find text in the picture** (misread letters), the **end credits** found by Sign the subtitles;
+        - anything the **AI** proposes.
+
+        Please don't report these as bugs: there's nothing to fix in Subtle itself. A tool that crashes, freezes, loses your work or ignores your settings is a bug, though, even in these features.
+
+        **Your files stay yours.** Don't attach a film. A few lines of subtitles that show the problem are welcome.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, what you got instead.
+      placeholder: |
+        I opened an .ass file, chose Shift times, moved by +2 s and pressed Shift.
+        Expected: every subtitle 2 s later.
+        Got: the italics were lost.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      description: The steps, one per line, if you found them.
+      placeholder: |
+        1. Open …
+        2. Click …
+        3. …
+  - type: input
+    id: version
+    attributes:
+      label: Subtle version
+      description: Settings › Credits, e.g. "Version 2.1.0 (181f385)".
+    validations:
+      required: true
+  - type: input
+    id: browser
+    attributes:
+      label: Browser and system
+      placeholder: Chrome 142, macOS 15
+    validations:
+      required: true
+  - type: input
+    id: files
+    attributes:
+      label: Files
+      description: The subtitle format and the film's (MP4, MKV…), if it's about a file.
+      placeholder: SRT in UTF-8, MKV with H.264 and AAC
+  - type: textarea
+    id: console
+    attributes:
+      label: Errors in the console
+      description: If you can, View › Developer › JavaScript Console in Chrome, and paste what's in red.
+      render: text

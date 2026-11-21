@@ -1,0 +1,17 @@
+name: Idea
+description: Something Subtle could do, or do better.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: need
+    attributes:
+      label: What you're trying to do
+      description: 'The job, rather than the button you imagine: it helps find the best way to do it.'
+      placeholder: My client asks for subtitles that never cross a shot change, and I check each one by hand.
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: How you do it today
+      description: In Subtle, in another tool, or by hand.
