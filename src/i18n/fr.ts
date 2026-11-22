@@ -23,7 +23,7 @@ const low = (name: string) => name.charAt(0).toLocaleLowerCase('fr') + name.slic
 const dec = (x: number | string) => String(x).replace('.', ',');
 
 export const fr: Translation = {
-  app: 'Subtle',
+  app: 'Subtle Studio',
   savedLocally: 'Enregistré localement',
   dropVideoAgain: (name: string) => `Déposer à nouveau ${f(name)}`,
   reopenVideo: (name: string) => `Rouvrir ${f(name)}`,
@@ -148,11 +148,11 @@ export const fr: Translation = {
     shifted: (s: number) => (s ? `${s > 0 ? '+' : '−'}${Math.abs(s)} s` : '0 s'),
     noVideo: 'Pas de vidéo',
     noMatch: 'Aucun résultat.',
-    notAProject: (name: string) => `${f(name)} n’est pas un fichier de projet Subtle.`,
+    notAProject: (name: string) => `${f(name)} n’est pas un fichier de projet Subtle Studio.`,
     imported: (title: string) => `${f(title)} importé.`,
   },
   smallScreen: {
-    title: 'Ouvrez Subtle sur un ordinateur',
+    title: 'Ouvrez Subtle Studio sur un ordinateur',
     text: 'Il faut un grand écran, un clavier et Chrome ou Edge.',
   },
   crash: {
@@ -187,16 +187,16 @@ export const fr: Translation = {
     needsChrome: 'Nécessite Chrome ou Edge',
   },
   install: {
-    updated: 'Une nouvelle version de Subtle est prête.',
+    updated: 'Une nouvelle version de Subtle Studio est prête.',
     reload: 'Recharger',
     title: 'Application',
     button: 'Installer',
-    cardTitle: 'Installer Subtle sur votre ordinateur',
+    cardTitle: 'Installer Subtle Studio sur votre ordinateur',
     cardText: 'Sa propre fenêtre et son icône, et ça marche hors ligne.',
     label: 'App hors ligne sur votre ordinateur',
     installed: 'Installée.',
     how: 'Chrome : icône d’installation dans la barre d’adresse. Safari : Fichier › Ajouter au Dock.',
-    done: 'Subtle est installé.',
+    done: 'Subtle Studio est installé.',
   },
   files: {
     noSubsIn: (name: string) => `Aucun sous-titre dans ${f(name)}.`,
@@ -495,7 +495,7 @@ export const fr: Translation = {
       madeBy: 'Créé par',
       version: (v: string) => `Version ${v}`,
       source: 'Code source sur',
-      intro: 'Subtle est gratuit et open source, construit sur ces projets :',
+      intro: 'Subtle Studio est gratuit et open source, construit sur ces projets :',
       roles: {
         react: 'Interface',
         zustand: 'État',

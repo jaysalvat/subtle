@@ -43,7 +43,7 @@ if (sh(`git tag -l ${tag}`)) fail(`${tag} already exists.`);
 const rl = createInterface({ input: process.stdin, output: process.stdout });
 const yes = async (question) => /^y(es)?$/i.test((await rl.question(`${question} (y/N) `)).trim());
 
-console.log(`\nSubtle ${current} → ${version}\n\n${notes}\n`);
+console.log(`\nSubtle Studio ${current} → ${version}\n\n${notes}\n`);
 if (!(await yes(`Release ${tag}?`))) process.exit(0);
 
 try {
@@ -59,7 +59,7 @@ try {
 
 sh('git add package.json package-lock.json CHANGELOG.md');
 sh(`git commit -m "chore: release ${tag}"`);
-sh(`git tag -a ${tag} -m "Subtle ${version}"`);
+sh(`git tag -a ${tag} -m "Subtle Studio ${version}"`);
 console.log(`\n✓ ${tag} committed and tagged.`);
 
 if (await yes(`Push main and ${tag} to GitHub?`)) {

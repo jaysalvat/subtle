@@ -270,7 +270,7 @@ export function parseAss(input: string): SubtitleDoc {
 }
 
 const ASS_HEADER = `[Script Info]
-; Written by Subtle
+; Written by Subtle Studio
 ScriptType: v4.00+
 PlayResX: 1920
 PlayResY: 1080

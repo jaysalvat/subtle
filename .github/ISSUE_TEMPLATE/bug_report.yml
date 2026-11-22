@@ -1,5 +1,5 @@
 name: Bug report
-description: Something in Subtle breaks or doesn't do what it says.
+description: Something in Subtle Studio breaks or doesn't do what it says.
 labels: [bug]
 body:
   - type: markdown
@@ -7,13 +7,13 @@ body:
       value: |
         Thanks for taking the time. Before you start:
 
-        **What can't be exact, and isn't a bug.** Subtle reads the film with models that guess, and a guess is sometimes off:
+        **What can't be exact, and isn't a bug.** Subtle Studio reads the film with models that guess, and a guess is sometimes off:
         - the **dialogue waveform** (where voices are): it misses quiet or overlapping voices, hears some music or noise as speech, and its edges are a little early or late;
         - what follows from it: snapping to the voice, **Align on the dialogue**, **Guess from the dialogue**, **Sync from a reference file**;
         - **Subtitles from the audio** (misheard words), **Find text in the picture** (misread letters), the **end credits** found by Sign the subtitles;
         - anything the **AI** proposes.
 
-        Please don't report these as bugs: there's nothing to fix in Subtle itself. A tool that crashes, freezes, loses your work or ignores your settings is a bug, though, even in these features.
+        Please don't report these as bugs: there's nothing to fix in Subtle Studio itself. A tool that crashes, freezes, loses your work or ignores your settings is a bug, though, even in these features.
 
         **Your files stay yours.** Don't attach a film. A few lines of subtitles that show the problem are welcome.
   - type: textarea
@@ -39,7 +39,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Subtle version
+      label: Subtle Studio version
       description: Settings › Credits, e.g. "Version 2.1.0 (181f385)".
     validations:
       required: true

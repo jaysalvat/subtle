@@ -4,6 +4,8 @@ Instructions for Claude (and any AI assistant) working in this repository. Read 
 
 ## The project
 
+**Subtle Studio** is the name shown and communicated (UI, manifest, README, site); the repo, `subtle.jaysalvat.com`, the `.subtle` file format and the storage keys (`subtle.*`) stay `subtle`: never rename those (users' projects live under them).
+
 Local web app to edit, retime, clean (hearing-impaired tags) and translate `.srt` / `.vtt` subtitles while watching the video. Everything runs in the browser, nothing is uploaded.
 
 ## Commands

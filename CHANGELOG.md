@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### Also
+
+- The app is now called **Subtle Studio** (same address, same files, your projects stay).
+
 ## 2.3.0
 
 ### New tools
