@@ -1,5 +1,5 @@
 name: Idea
-description: Something Subtle could do, or do better.
+description: Something Subtle Studio could do, or do better.
 labels: [enhancement]
 body:
   - type: textarea
@@ -14,4 +14,4 @@ body:
     id: how
     attributes:
       label: How you do it today
-      description: In Subtle, in another tool, or by hand.
+      description: In Subtle Studio, in another tool, or by hand.

@@ -18,7 +18,7 @@ const when = (d: Date) => {
 };
 
 export const en = {
-  app: 'Subtle',
+  app: 'Subtle Studio',
   savedLocally: 'Saved locally',
   dropVideoAgain: (name: string) => `Drop ${f(name)} again`,
   reopenVideo: (name: string) => `Reopen ${f(name)}`,
@@ -143,11 +143,11 @@ export const en = {
     shifted: (s: number) => (s ? `${s > 0 ? '+' : '−'}${Math.abs(s)} s` : '0 s'),
     noVideo: 'No video',
     noMatch: 'No match.',
-    notAProject: (name: string) => `${f(name)} is not a Subtle project file.`,
+    notAProject: (name: string) => `${f(name)} is not a Subtle Studio project file.`,
     imported: (title: string) => `${f(title)} imported.`,
   },
   smallScreen: {
-    title: 'Open Subtle on a computer',
+    title: 'Open Subtle Studio on a computer',
     text: 'It needs a large screen, a keyboard and Chrome or Edge.',
   },
   crash: {
@@ -182,16 +182,16 @@ export const en = {
     needsChrome: 'Needs Chrome or Edge',
   },
   install: {
-    updated: 'A new version of Subtle is ready.',
+    updated: 'A new version of Subtle Studio is ready.',
     reload: 'Reload',
     title: 'App',
     button: 'Install',
-    cardTitle: 'Install Subtle on your computer',
+    cardTitle: 'Install Subtle Studio on your computer',
     cardText: 'Its own window and icon, and it works offline.',
     label: 'Offline app on your computer',
     installed: 'Installed.',
     how: 'Chrome: install icon in the address bar. Safari: File › Add to Dock.',
-    done: 'Subtle is installed.',
+    done: 'Subtle Studio is installed.',
   },
   files: {
     noSubsIn: (name: string) => `No subtitles in ${f(name)}.`,
@@ -481,7 +481,7 @@ export const en = {
       madeBy: 'Made by',
       version: (v: string) => `Version ${v}`,
       source: 'Source code on',
-      intro: 'Subtle is free and open source, built on these projects:',
+      intro: 'Subtle Studio is free and open source, built on these projects:',
       roles: {
         react: 'Interface',
         zustand: 'State',

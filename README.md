@@ -1,8 +1,8 @@
-# Subtle
+# Subtle Studio
 
 **Subtitles, done right.**
 
-**[Open Subtle](https://subtle.jaysalvat.com/app/)** · [Website](https://subtle.jaysalvat.com) · [Guide](https://subtle.jaysalvat.com/docs/)
+**[Open Subtle Studio](https://subtle.jaysalvat.com/app/)** · [Website](https://subtle.jaysalvat.com) · [Guide](https://subtle.jaysalvat.com/docs/)
 
 A subtitle editor that runs entirely in your browser. Edit, retime, sync, clean, check, create and translate subtitles while watching the film. Nothing is uploaded: your video and your subtitles never leave your computer.
 
@@ -14,7 +14,7 @@ A subtitle editor that runs entirely in your browser. Edit, retime, sync, clean,
 
 - **Your own AI**: Claude, ChatGPT, DeepSeek, Mistral or Gemini with your API key, any model they offer. Your key stays in your browser and is sent only to that service. You pay the service directly, for what you use: each run shows the tokens it will send before it starts.
 - **Or fully local**: a model on your computer through Ollama or LM Studio (or any server speaking the OpenAI API). Nothing leaves your machine.
-- **Or no AI service at all**: Chrome's built-in translator, and the models Subtle runs in the browser itself.
+- **Or no AI service at all**: Chrome's built-in translator, and the models Subtle Studio runs in the browser itself.
 
 What the AI does:
 
