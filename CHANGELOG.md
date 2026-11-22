@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.3.0
+
 ### New tools
 
 - **Selections** (top bar, beside Bookmarks): save the selected subtitles under a name (a scene, a character's lines, the ones to check) and select them again in one click. Kept with the project.
