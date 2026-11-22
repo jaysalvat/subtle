@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+### New tools
+
+- **Selections** (top bar, beside Bookmarks): save the selected subtitles under a name (a scene, a character's lines, the ones to check) and select them again in one click. Kept with the project.
+
 ### Also
 
 - Links to Subtle show a preview picture in messages and social apps.

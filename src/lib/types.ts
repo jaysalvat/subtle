@@ -13,6 +13,14 @@ export interface Bookmark {
   image?: string;
 }
 
+/** A selection of subtitles kept with the project (Selections menu), to select them again later. */
+export interface SavedSelection {
+  id: string;
+  label: string;
+  /** Subtitle ids; the ones deleted since are left out when it's used. */
+  ids: string[];
+}
+
 export interface Cue {
   /** Stable id, never the index. */
   id: string;

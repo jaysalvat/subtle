@@ -37,6 +37,33 @@ export function swallowNextClick(e: PointerEvent) {
   setTimeout(() => window.removeEventListener('click', drop, true), 1000);
 }
 
+/**
+ * An open popover (Bookmarks, Selections) closes on a click outside `wrap` (that click does nothing
+ * else: swallowNextClick) and on Escape.
+ */
+export function useCloseOutside(wrap: { current: HTMLElement | null }, open: boolean, close: () => void) {
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!wrap.current?.contains(e.target as Node)) {
+        close();
+        swallowNextClick(e);
+      }
+    };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      e.stopPropagation();
+      close();
+    };
+    window.addEventListener('pointerdown', onDown);
+    window.addEventListener('keydown', onKey, true);
+    return () => {
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('keydown', onKey, true);
+    };
+  }, [open, wrap, close]);
+}
+
 /** Dropdown menu: a button that opens a list of actions. Escape or a click outside closes it. */
 export function Menu({
   label,
