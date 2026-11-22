@@ -154,7 +154,7 @@ export function Menu({
         it.onSelect();
       }}
     >
-      {it.pill && <Pill accent>{it.pill}</Pill>}
+      {it.pill && <Pill ai>{it.pill}</Pill>}
       <span className="menu-label">
         <WithKeys text={it.label} />
       </span>
