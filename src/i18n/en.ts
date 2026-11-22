@@ -894,6 +894,18 @@ export const en = {
     remove: 'Delete the note',
     done: 'Done',
   },
+  selections: {
+    menu: 'Selections',
+    empty: 'No saved selections. Select subtitles (⇧-drag on the timeline, ⇧ or ⌘-click in the list), then save them here.',
+    save: (n: number) => (n ? `Save the selection (${subs(n)})` : 'Save the selection'),
+    none: 'Select subtitles first.',
+    saved: (n: number) => `Selection saved: ${subs(n)}.`,
+    defaultLabel: (n: number, range: string) => `${subs(n)} · ${range}`,
+    gone: 'These subtitles have been deleted.',
+    select: 'Select them again',
+    rename: 'Selection name',
+    remove: 'Delete',
+  },
   bookmarks: {
     menu: 'Bookmarks',
     empty: 'No bookmarks. Press (B) to add one.',

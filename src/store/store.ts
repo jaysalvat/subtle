@@ -11,7 +11,7 @@ import { scanFilmSubs, stopFilmSubs } from './filmSubs';
 import { canDecode } from './support';
 import { startFrames, stopFrames } from './frames';
 import { FEATURES } from '../features';
-import { DEFAULT_SETTINGS, newId, type Bookmark, type Cue, type Settings, type SubtitleDoc, type SubtitleFormat } from '../lib/types';
+import { DEFAULT_SETTINGS, newId, type Bookmark, type Cue, type SavedSelection, type Settings, type SubtitleDoc, type SubtitleFormat } from '../lib/types';
 import { defaultLabel, nextSlot, bookmarkNear } from '../lib/bookmarks';
 import { noteNear, type SceneNote } from '../lib/sceneNotes';
 import { adoptTranslation, sideField, type EditSide } from '../lib/translation';
@@ -197,6 +197,8 @@ export interface AppState {
 
   /** Markers in the film, saved with the project (not exported in subtitle files). */
   bookmarks: Bookmark[];
+  /** Selections kept with the project (Selections menu). */
+  selections: SavedSelection[];
   /** The project's own name, when renamed (else it's named after the film). */
   projectName: string | null;
   /** The project's picture (a frame of its film, JPEG data URL), and whether it was chosen (else taken at 10 %). */
@@ -211,6 +213,9 @@ export interface AppState {
   addBookmark: (time: number) => Bookmark;
   renameBookmark: (id: string, label: string) => void;
   removeBookmark: (id: string) => void;
+  addSelection: (ids: string[], label: string) => void;
+  renameSelection: (id: string, label: string) => void;
+  removeSelection: (id: string) => void;
   setBookmarkImage: (id: string, image: string) => void;
 
   /** `fileName` is the full name, extension included (see lib/filename). */
@@ -299,6 +304,7 @@ export const useApp = create<AppState>((set, get) => ({
   setAutoTranslating: (v) => set({ autoTranslating: v }),
   restored: false,
   bookmarks: [],
+  selections: [],
   sceneNotes: [],
   projectName: null,
   projectPicture: null,
@@ -387,6 +393,15 @@ export const useApp = create<AppState>((set, get) => ({
   },
   removeBookmark(id) {
     set({ bookmarks: get().bookmarks.filter((b) => b.id !== id) });
+  },
+  addSelection(ids, label) {
+    set({ selections: [...get().selections, { id: newId(), label, ids }] });
+  },
+  renameSelection(id, label) {
+    set({ selections: get().selections.map((x) => (x.id === id ? { ...x, label } : x)) });
+  },
+  removeSelection(id) {
+    set({ selections: get().selections.filter((x) => x.id !== id) });
   },
 
   async loadSubtitleFile(file, handle = null) {
@@ -479,6 +494,7 @@ export const useApp = create<AppState>((set, get) => ({
       past: [],
       future: [],
       bookmarks: [],
+      selections: [],
       sceneNotes: [],
       projectName: null,
       projectPicture: null,
@@ -711,6 +727,7 @@ export interface SavedProject {
   translation: Translation | null;
   video: VideoInfo | null;
   bookmarks?: Bookmark[];
+  selections?: SavedSelection[];
   sceneNotes?: SceneNote[];
   /** Given by Rename (else the film's name is shown). */
   name?: string | null;
@@ -729,6 +746,7 @@ export function applyRestored(p: SavedProject) {
     expectedVideo: p.video,
     videoHandle: p.videoHandle ?? null,
     bookmarks: p.bookmarks ?? [],
+    selections: p.selections ?? [],
     sceneNotes: p.sceneNotes ?? [],
     projectName: p.name ?? null,
     projectPicture: p.picture ?? null,
@@ -762,6 +780,7 @@ export function projectSnapshot(st: AppState): SavedProject | null {
     translation: st.translation,
     video: st.video ?? st.expectedVideo,
     bookmarks: st.bookmarks,
+    selections: st.selections,
     sceneNotes: st.sceneNotes,
     name: st.projectName,
     picture: st.projectPicture,
@@ -779,6 +798,7 @@ export const projectChanged = (s: AppState, prev: AppState) =>
     s.video === prev.video &&
     s.videoHandle === prev.videoHandle &&
     s.bookmarks === prev.bookmarks &&
+    s.selections === prev.selections &&
     s.sceneNotes === prev.sceneNotes &&
     s.projectName === prev.projectName &&
     s.projectPicture === prev.projectPicture &&

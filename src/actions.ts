@@ -2,7 +2,8 @@ import { caretFor, focusField, forgetCaret } from './store/caret';
 import { editableText, setColour, isBold, setBold } from './lib/markup';
 import { newId } from './lib/types';
 import { replaceColour, withoutColours } from './lib/colour';
-import type { Cue } from './lib/types';
+import type { Cue, SavedSelection } from './lib/types';
+import { liveIds, selectionRange } from './lib/selections';
 import { isUpperCase, toSentenceCase, toUpperCase } from './lib/textCase';
 import { bookmarkNear, defaultLabel, nextMark } from './lib/bookmarks';
 import { t } from './i18n';
@@ -192,6 +193,23 @@ export function addBookmarkHere() {
 
 /** The frame shown, as a small JPEG data URL (≈ 3 KB), or null without a video. */
 const frameImage = async (width = 160) => (player.el ? drawFrame(player.el, width) : null);
+
+/** Selections menu: the selected subtitles kept with the project, under a name made from their numbers. */
+export function saveSelection() {
+  const st = useApp.getState();
+  const ids = liveIds({ ids: st.selection }, cues());
+  if (!ids.length) return notify(t.selections.none);
+  st.addSelection(ids, t.selections.defaultLabel(ids.length, selectionRange(ids, cues())));
+  notify(t.selections.saved(ids.length), { tone: 'success' });
+}
+
+/** Selects a saved selection again (the ones still there) and goes to its first subtitle. */
+export function selectSaved(saved: SavedSelection) {
+  const ids = liveIds(saved, cues());
+  if (!ids.length) return notify(t.selections.gone, { tone: 'warning' });
+  goToCue(ids[0]);
+  useApp.setState({ selection: ids });
+}
 
 export function goToBookmark(time: number) {
   player.seek(time);

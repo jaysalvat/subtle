@@ -17,6 +17,7 @@ import { ProjectsIcon, Gear, Keyboard, Logo, Redo, Undo } from './Icons';
 import { Menu } from './Menu';
 import { languageName } from '../lib/languages';
 import { BookmarksMenu } from './BookmarksMenu';
+import { SelectionsMenu } from './SelectionsMenu';
 import { useFilmSubs } from '../store/filmSubs';
 import { useSupport } from '../store/support';
 
@@ -112,6 +113,7 @@ export function TopBar() {
       <div className="spacer" />
       <nav className="tools" aria-label={t.tools.menu}>
         <BookmarksMenu />
+        <SelectionsMenu />
         <Menu
           label={t.tools.menu}
           columns={2}

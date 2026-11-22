@@ -920,6 +920,18 @@ export const fr: Translation = {
     remove: 'Supprimer la note',
     done: 'OK',
   },
+  selections: {
+    menu: 'Sélections',
+    empty: 'Aucune sélection enregistrée. Sélectionnez des sous-titres (⇧-glisser sur la timeline, ⇧ ou ⌘-clic dans la liste), puis enregistrez-les ici.',
+    save: (n: number) => (n ? `Enregistrer la sélection (${subs(n)})` : 'Enregistrer la sélection'),
+    none: 'Sélectionnez d’abord des sous-titres.',
+    saved: (n: number) => `Sélection enregistrée : ${subs(n)}.`,
+    defaultLabel: (n: number, range: string) => `${subs(n)} · ${range}`,
+    gone: 'Ces sous-titres ont été supprimés.',
+    select: 'Les sélectionner à nouveau',
+    rename: 'Nom de la sélection',
+    remove: 'Supprimer',
+  },
   bookmarks: {
     menu: 'Signets',
     empty: 'Aucun signet. Appuyer sur (B) pour en ajouter un.',

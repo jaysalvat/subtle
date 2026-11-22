@@ -703,6 +703,20 @@ describe('the lines to pick from show the language edited', async () => {
   });
 });
 
+describe('saved selections', async () => {
+  const { liveIds, selectionRange } = await import('./selections');
+  const cues = [cue(0, 1000, 'a', 'a'), cue(1000, 2000, 'b', 'b'), cue(2000, 3000, 'c', 'c'), cue(3000, 4000, 'd', 'd')];
+  it('the ones still there, in film order', () => {
+    expect(liveIds({ ids: ['c', 'gone', 'a'] }, cues)).toEqual(['a', 'c']);
+  });
+  it('their numbers', () => {
+    expect(selectionRange(['b'], cues)).toBe('#2');
+    expect(selectionRange(['b', 'c', 'd'], cues)).toBe('#2–#4');
+    expect(selectionRange(['a', 'd'], cues)).toBe('#1 … #4');
+    expect(selectionRange(['gone'], cues)).toBe('');
+  });
+});
+
 describe('balance lines (Tools › Balance lines, Check quality, translation)', async () => {
   const { balanceText, balanceCueText, balanceLines } = await import('./lines');
   it('one line when it fits', () => {
@@ -1862,6 +1876,7 @@ describe('project files from elsewhere', () => {
         lang: '<script>',
       },
       bookmarks: 'x',
+      selections: [{ label: 'Scene 1', ids: ['a', 'nobody', 3] }, { ids: ['nobody'] }, 'x'],
       sceneNotes: [{ time: 'soon' }, { time: 5, text: 'Ok' }],
       translation: { targetLang: 'fr' },
       picture: 'https://tracker.example/p.gif',
@@ -1876,6 +1891,8 @@ describe('project files from elsewhere', () => {
     ]);
     expect(new Set(p.doc.cues.map((c) => c.id)).size).toBe(2); // the twin id was renewed
     expect(p.bookmarks).toEqual([]);
+    // Only ids of subtitles in the file; a selection left empty goes.
+    expect(p.selections.map((x) => [x.label, x.ids])).toEqual([['Scene 1', ['a']]]);
     expect(p.sceneNotes.map((n) => n.text)).toEqual(['Ok']);
     expect(p.translation).toEqual({ targetLang: 'fr' });
     expect(p.picture).toBeNull();

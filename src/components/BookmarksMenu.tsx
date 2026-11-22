@@ -1,5 +1,5 @@
-import { swallowNextClick } from './Menu';
-import { useEffect, useRef, useState } from 'react';
+import { useCloseOutside } from './Menu';
+import { useCallback, useRef, useState } from 'react';
 import { t } from '../i18n';
 import { byTime } from '../lib/bookmarks';
 import { formatTimecode } from '../lib/time';
@@ -18,28 +18,10 @@ export function BookmarksMenu() {
   const rename = useApp((s) => s.renameBookmark);
   const remove = useApp((s) => s.removeBookmark);
   const [open, setOpen] = useState(false);
+  const close = useCallback(() => setOpen(false), []);
   const wrap = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (!open) return;
-    const onDown = (e: PointerEvent) => {
-      if (!wrap.current?.contains(e.target as Node)) {
-        setOpen(false);
-        swallowNextClick(e);
-      }
-    };
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== 'Escape') return;
-      e.stopPropagation();
-      setOpen(false);
-    };
-    window.addEventListener('pointerdown', onDown);
-    window.addEventListener('keydown', onKey, true);
-    return () => {
-      window.removeEventListener('pointerdown', onDown);
-      window.removeEventListener('keydown', onKey, true);
-    };
-  }, [open]);
+  useCloseOutside(wrap, open, close);
 
   return (
     <div className="menu" ref={wrap}>

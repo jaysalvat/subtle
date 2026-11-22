@@ -113,6 +113,11 @@
   outline: none;
 }
 
+.selection-count {
+  flex: 0 0 36px;
+  text-align: center;
+}
+
 .bookmarks-add {
   margin-top: 4px;
   border-top: 1px solid var(--border-soft);

@@ -6,7 +6,7 @@
 import { sameVideo } from './fingerprint';
 import { isLangCode } from './languages';
 import type { SceneNote } from './sceneNotes';
-import { newId, type Bookmark, type Cue, type SubtitleDoc, type SubtitleFormat } from './types';
+import { newId, type Bookmark, type Cue, type SavedSelection, type SubtitleDoc, type SubtitleFormat } from './types';
 
 export interface ProjectCard {
   id: string;
@@ -90,6 +90,7 @@ export interface ProjectData {
   translation: { targetLang: string; sourceLang?: string } | null;
   video: { name: string; size: number; durationMs: number; fp?: string } | null;
   bookmarks: Bookmark[];
+  selections: SavedSelection[];
   sceneNotes: SceneNote[];
   name: string | null;
   picture: string | null;
@@ -163,6 +164,16 @@ export function cleanProject(raw: unknown): ProjectData | null {
       label: str(b.label, 500) ?? '',
       ...(safePicture(b.image) ? { image: safePicture(b.image)! } : {}),
     }));
+  const selections = list(raw.selections)
+    .filter(isObj)
+    .map((x) => ({
+      id: str(x.id, 100) || newId(),
+      label: str(x.label, 500) ?? '',
+      ids: list(x.ids)
+        .map((id) => str(id, 100))
+        .filter((id): id is string => !!id && seen.has(id)),
+    }))
+    .filter((x) => x.ids.length);
   const sceneNotes = list(raw.sceneNotes)
     .filter(isObj)
     .filter((n) => num(n.time))
@@ -173,6 +184,7 @@ export function cleanProject(raw: unknown): ProjectData | null {
     translation: tr,
     video,
     bookmarks,
+    selections,
     sceneNotes,
     name: str(raw.name, 500)?.trim() || null,
     picture: safePicture(raw.picture),
