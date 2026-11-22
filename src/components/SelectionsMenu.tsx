@@ -40,7 +40,7 @@ export function SelectionsMenu() {
               const n = liveIds(x, cues).length;
               return (
                 <div key={x.id} className="bookmark-row">
-                  <button className="btn sm primary tnum selection-count" title={ts.select} disabled={!n} onClick={() => selectSaved(x)}>
+                  <button className="sub-row-time tnum selection-count" title={ts.select} disabled={!n} onClick={() => selectSaved(x)}>
                     {n}
                   </button>
                   <input
