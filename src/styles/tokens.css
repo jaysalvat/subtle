@@ -66,6 +66,9 @@
   --danger: #f07b74;
   --hi: #8fb8f0;
   /* Scene notes: two colours, alternating from one scene to the next. */
+  /* AI marks (pills on AI features): the site's AI colour, same as scene A. */
+  --ai: #b79cf0;
+  --ai-soft-bg: #2e2c3a;
   --scene-a: #b79cf0;
   --scene-a-hi: #d2c0fa;
   --scene-b: #7fc8b8;

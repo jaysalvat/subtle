@@ -145,10 +145,10 @@
   position: relative;
 }
 
-.pill.accent {
-  background: var(--accent-soft-bg);
-  color: var(--accent-soft-text);
-  box-shadow: inset 0 0 0 1px var(--btn-soft-border);
+.pill.ai {
+  background: var(--ai-soft-bg);
+  color: var(--ai);
+  box-shadow: inset 0 0 0 1px var(--ai);
 }
 
 /* A button that reads as a link (go somewhere, open another tool). Areas only change what differs. */
