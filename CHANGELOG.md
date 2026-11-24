@@ -2,10 +2,10 @@
 
 ## Unreleased
 
-### Also
+### New
 
-- The app speaks **Spanish** (Settings › General › App › Language, or your browser's language).
-- The app is now called **Subtle Studio** (same address, same files, your projects stay).
+- **Subtle Studio**: the app has a new name. Same address, same files, your projects stay.
+- **¡Hola!** The app speaks **Spanish**, as well as English and French (Settings › General › App › Language, or your browser's language).
 
 ## 2.3.0
 
