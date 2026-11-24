@@ -3,7 +3,7 @@
  * show them as key caps instead of "(B)". Only a bracket holding a key (modifiers allowed), optionally
  * followed by one word ("⌘ wheel"), counts; "(⌥ while dragging: off)" or "(s)" stay as they are.
  */
-const KEY = '[⌘⌥⇧⌃]*(?:[A-Z0-9?]|[←→↑↓]|1–9|Esc|Échap|Enter|Entrée|Space|Espace)|[⌘⌥⇧⌃]+';
+const KEY = '[⌘⌥⇧⌃]*(?:[A-Z0-9?]|[←→↑↓]|1–9|Esc|Échap|Enter|Entrée|Intro|Space|Espace|Espacio)|[⌘⌥⇧⌃]+';
 const SHORTCUT = new RegExp(`^((?:${KEY}))(?: (\\p{L}+))?$`, 'u');
 
 export type KeyPart = string | { key: string };

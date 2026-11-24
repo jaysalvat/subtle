@@ -10,14 +10,25 @@
   padding: 0 12px 0 16px;
   background: var(--bg-panel);
   border-bottom: 1px solid var(--border);
+  container: topbar / inline-size;
+}
+
+/* Short of room (a narrow window, a language with long words): priority classes (base.css). */
+@container topbar (max-width: 1280px) {
+  .topbar .priority-low {
+    display: none;
+  }
 }
 
 .brand {
   display: flex;
+  flex: none;
   align-items: center;
   gap: 8px;
   font-weight: 600;
   font-size: var(--fs-l);
+  /* "Subtle Studio" on one line: the file chips give way first. */
+  white-space: nowrap;
 }
 
 .chips {

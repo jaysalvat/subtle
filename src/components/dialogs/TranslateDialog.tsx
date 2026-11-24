@@ -14,7 +14,7 @@ import { LanguagePicker } from '../LanguagePicker';
 import { AiPill } from '../Pill';
 import { AutoTranslate, canTranslate, useEngineState } from '../AutoTranslate';
 import { useMemo, useState } from 'react';
-import { t } from '../../i18n';
+import { t, uiLanguage } from '../../i18n';
 import { useApp } from '../../store/store';
 import { close, Dialog } from './Dialog';
 
@@ -29,7 +29,8 @@ export function TranslateDialog() {
   const engineId = useApp((s) => s.settings.translationEngine);
   const doc = useApp((s) => s.doc)!;
   const [from, setFrom] = useState(doc.lang ?? 'en');
-  const [to, setTo] = useState(translation?.targetLang ?? (doc.lang === 'fr' ? 'en' : 'fr'));
+  // Into the UI's language when it isn't the film's (a Spanish UI translates into Spanish), else French / English.
+  const [to, setTo] = useState(translation?.targetLang ?? (uiLanguage !== 'en' && uiLanguage !== doc.lang ? uiLanguage : doc.lang === 'fr' ? 'en' : 'fr'));
   const [how, setHow] = useState<'auto' | 'copy' | 'empty' | 'file' | null>(null);
   // "Start from a file": the translation file, lined up on the original by time.
   const [file, setFile] = useState<{ name: string; cues: Cue[] } | null>(null);

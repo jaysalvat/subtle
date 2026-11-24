@@ -27,6 +27,7 @@ interface UiLanguageInfo {
 export const UI_LANGUAGE_INFO = {
   en: { name: 'English', load: async () => en },
   fr: { name: 'Français', load: async () => (await import('./fr')).fr },
+  es: { name: 'Español', load: async () => (await import('./es')).es },
 } satisfies Record<string, UiLanguageInfo>;
 
 export type UiLanguage = keyof typeof UI_LANGUAGE_INFO;

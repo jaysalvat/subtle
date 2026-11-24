@@ -1,7 +1,7 @@
 /** Numbers as the UI's language writes them ("2.4" / "2,4"): set once at start by src/i18n. */
 let numberLocale = 'en-US';
 export const setNumberLocale = (lang: string) => {
-  numberLocale = lang === 'fr' ? 'fr-FR' : 'en-US';
+  numberLocale = ({ fr: 'fr-FR', es: 'es-ES' } as Record<string, string>)[lang] ?? 'en-US';
 };
 
 /** `x` with exactly `digits` decimals, the UI's decimal mark. */
