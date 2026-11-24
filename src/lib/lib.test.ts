@@ -1998,13 +1998,17 @@ describe('partial texts (UI languages)', async () => {
     expect(missingKeys(full, full)).toEqual([]);
   });
 
-  it('French: phrases still in English', async () => {
+  it('French and Spanish: phrases still in English', async () => {
     const { en } = await import('../i18n/en');
-    const { fr } = await import('../i18n/fr');
-    const missing = missingKeys(en, fr);
-    // A list to work from, not a failure: a language may ship half translated.
-    if (missing.length) console.info(`fr: ${missing.length} phrases in English\n  ${missing.join('\n  ')}`);
-    expect(Array.isArray(missing)).toBe(true);
+    for (const [code, tr] of [
+      ['fr', (await import('../i18n/fr')).fr],
+      ['es', (await import('../i18n/es')).es],
+    ] as const) {
+      const missing = missingKeys(en, tr);
+      // A list to work from, not a failure: a language may ship half translated.
+      if (missing.length) console.info(`${code}: ${missing.length} phrases in English\n  ${missing.join('\n  ')}`);
+      expect(Array.isArray(missing)).toBe(true);
+    }
   });
 });
 
@@ -2215,6 +2219,7 @@ describe('scopeFilter (batch tools)', async () => {
 describe('shortcuts in a text', () => {
   it('turns a bracketed key into a key, other brackets stay', () => {
     expect(keyParts('Add a bookmark (B)')).toEqual(['Add a bookmark ', { key: 'B' }]);
+    expect(keyParts('Pulsa Aquí (Intro)')).toEqual(['Pulsa Aquí ', { key: 'Intro' }]);
     expect(keyParts('Save (⇧⌘S) now')).toEqual(['Save ', { key: '⇧⌘S' }, ' now']);
     expect(keyParts('Zoom in (⌘ wheel)')).toEqual(['Zoom in ', { key: '⌘' }, ' wheel']);
     expect(keyParts('Go to bookmark 1 (1–9)')).toEqual(['Go to bookmark 1 ', { key: '1–9' }]);

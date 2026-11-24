@@ -39,7 +39,7 @@ On your computer, no key needed:
 - **Clean and check**: quality report against Netflix, Prime Video or TED rules with fixes, lengthen short subtitles, remove hearing-impaired tags, fix punctuation (French rules included), find and replace.
 - **Create**: subtitles from the audio with Whisper, text found in the picture (OCR), both on your computer.
 - **Translate**: with Chrome's built-in translator, a local model (Ollama, LM Studio) or an AI service with your own key (Claude, ChatGPT, DeepSeek, Mistral, Gemini), or start from an existing translation file; review and shorten with AI.
-- **Work**: projects kept in the browser, save into the subtitle file (Chrome / Edge), export to any format, bookmarks, scene notes, your signature at the start and in the end credits, keyboard shortcuts for everything (press `?`), installable as an offline app, English and French.
+- **Work**: projects kept in the browser, save into the subtitle file (Chrome / Edge), export to any format, bookmarks, scene notes, your signature at the start and in the end credits, keyboard shortcuts for everything (press `?`), installable as an offline app, in English, French and Spanish.
 
 | Sync by ear                                                                  | Check quality                                                                                   | The Tools menu                                 |
 | ---------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------------- |
@@ -89,7 +89,7 @@ src/
   media/        reading films (Mediabunny, WebCodecs), speech detection
   workers/      waveform, filmstrip, frames, speech recognition, OCR, MKV subtitles
   mt/           translation engines
-  i18n/         every string, English and French
+  i18n/         every string, English, French and Spanish
   styles/       CSS, design tokens (see DESIGN.md)
 ```
 

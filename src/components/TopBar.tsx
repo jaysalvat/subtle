@@ -281,12 +281,13 @@ export function TopBar() {
 function SaveStatus() {
   const hasFile = useApp((s) => !!s.fileHandle);
   const dirty = useApp(isDirty);
-  if (!canSaveInPlace || (!hasFile && !dirty)) return <span className="dim">{t.savedLocally}</span>;
+  // "Saved" goes first when the bar is short of room (priority-low); "Unsaved changes" always stays.
+  if (!canSaveInPlace || (!hasFile && !dirty)) return <span className="dim priority-low">{t.savedLocally}</span>;
   return dirty ? (
     <span className="save-status unsaved" title={t.save.statusUnsavedHint}>
       {t.save.statusUnsaved}
     </span>
   ) : (
-    <span className="dim">{t.save.statusSaved}</span>
+    <span className="dim priority-low">{t.save.statusSaved}</span>
   );
 }
