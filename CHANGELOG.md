@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.4.0
+
 ### New
 
 - **Subtle Studio**: the app has a new name. Same address, same files, your projects stay.
